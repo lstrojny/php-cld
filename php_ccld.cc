@@ -86,8 +86,8 @@ PHP_FUNCTION(ccld_detect)
 		encoding_hint,
 		percentages[3],
 		bytes,
-        i,
-        len;
+		i,
+		len;
 
 	bool reliable;
 
@@ -104,18 +104,18 @@ PHP_FUNCTION(ccld_detect)
     zval *detail;
 
 
-    if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbsss",
-        &text, &text_len, &is_plain_text, &include_extended_languages,
-        &top_level_domain_hint, &len, &language_hint_name, &len, &encoding_hint_name, &len) == FAILURE) {
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbsss",
+		&text, &text_len, &is_plain_text, &include_extended_languages,
+		&top_level_domain_hint, &len, &language_hint_name, &len, &encoding_hint_name, &len) == FAILURE) {
 
-        RETURN_NULL();
-    }
+		RETURN_NULL();
+	}
 
 
 	if (language_hint_name == NULL) {
 		language_hint = UNKNOWN_LANGUAGE;
 	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code given");
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code given");
 		RETURN_NULL();
 	}
 
@@ -123,7 +123,7 @@ PHP_FUNCTION(ccld_detect)
 	if (encoding_hint_name == NULL) {
 		encoding_hint = UNKNOWN_ENCODING;
 	} else {
-        php_error_docref(NULL TSRMLS_CC, E_WARNING, "Encoding hint not implemented");
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Encoding hint not implemented");
         RETURN_NULL();
 	}
 
