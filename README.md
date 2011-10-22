@@ -17,8 +17,10 @@ This small extension provides bindings to use the Chromium Language Detector
 ```php
 var_dump(CCLD\detect("Ein bisschen deutschprachiger Text"));
 ```
+
 will return
-```
+
+```text
 array(1) {
   [0]=>
   array(4) {
