@@ -128,9 +128,15 @@ PHP_FUNCTION(ccld_detect)
 
 
 	if (include_extended_languages) {
-		CompactLangDet::ExtDetectLanguageSummary(0, text, text_len, is_plain_text != 0, top_level_domain_hint, encoding_hint, language_hint, languages, percentages, normalized_score, &bytes, &reliable);
+
+		CompactLangDet::ExtDetectLanguageSummary(0, text, text_len, is_plain_text != 0,
+			top_level_domain_hint, encoding_hint, language_hint,
+			languages, percentages, normalized_score, &bytes, &reliable);
 	} else {
-		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text != 0, top_level_domain_hint, encoding_hint, language_hint, languages, percentages, &bytes, &reliable);
+
+		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text != 0,
+			top_level_domain_hint, encoding_hint, language_hint,
+			languages, percentages, &bytes, &reliable);
 	}
 
 	array_init(return_value);
