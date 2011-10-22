@@ -15,6 +15,7 @@ This small extension provides bindings to use the Chromium Compact Language Dete
 
 ## Usage
 ```php
+<?php
 var_dump(CCLD\detect("Ein bisschen deutschprachiger Text"));
 ```
 
