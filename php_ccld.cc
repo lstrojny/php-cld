@@ -123,7 +123,7 @@ PHP_FUNCTION(ccld_detect)
 		encoding_hint = UNKNOWN_ENCODING;
 	} else {
 		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Encoding hint not implemented");
-        RETURN_NULL();
+		RETURN_NULL();
 	}
 
 
@@ -134,19 +134,19 @@ PHP_FUNCTION(ccld_detect)
 	}
 
     array_init(return_value);
-    for (i = 0; i < 3; i++) {
-        language = languages[i];
+	for (i = 0; i < 3; i++) {
+		language = languages[i];
 
-        if (language == UNKNOWN_LANGUAGE) {
-            break;
-        }
+		if (language == UNKNOWN_LANGUAGE) {
+			break;
+		}
 
-        MAKE_STD_ZVAL(detail);
-        array_init(detail);
-        add_assoc_string(detail, "name", (char *)ExtLanguageName(language), 1);
-        add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
-        add_assoc_bool(detail, "reliable", reliable);
-        add_assoc_long(detail, "bytes", bytes);
-        add_next_index_zval(return_value, detail);
-    }
+		MAKE_STD_ZVAL(detail);
+		array_init(detail);
+		add_assoc_string(detail, "name", (char *)ExtLanguageName(language), 1);
+		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
+		add_assoc_bool(detail, "reliable", reliable);
+		add_assoc_long(detail, "bytes", bytes);
+		add_next_index_zval(return_value, detail);
+	}
 }
