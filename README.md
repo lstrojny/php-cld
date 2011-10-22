@@ -1,4 +1,4 @@
-# PHP bindings for Chromium Language Detector
+# PHP Bindings for Chromium Compact Language Detector (CCLD)
 
 This small extension provides bindings to use the Chromium Compact Language Detector
 (http://code.google.com/p/chromium-compact-language-detector/) in PHP.
