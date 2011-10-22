@@ -78,8 +78,6 @@ ZEND_GET_MODULE(ccld)
 
 PHP_FUNCTION(ccld_detect)
 {
-	char *text;
-
 	int text_len,
 		is_plain_text = 0,
 		include_extended_languages = 1,
@@ -91,17 +89,18 @@ PHP_FUNCTION(ccld_detect)
 
 	bool reliable;
 
-	char *top_level_domain_hint = NULL,
+	char *text,
+		*top_level_domain_hint = NULL,
 		*language_hint_name = NULL,
 		*encoding_hint_name = NULL;
 
 	Language languages[3],
-            language,
-			language_hint;
+		language,
+		language_hint;
 
 	double normalized_score[3];
 
-    zval *detail;
+	zval *detail;
 
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbsss",
