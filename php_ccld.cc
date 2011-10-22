@@ -133,7 +133,7 @@ PHP_FUNCTION(ccld_detect)
 		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text != 0, top_level_domain_hint, encoding_hint, language_hint, languages, percentages, &bytes, &reliable);
 	}
 
-    array_init(return_value);
+	array_init(return_value);
 	for (i = 0; i < 3; i++) {
 		language = languages[i];
 
