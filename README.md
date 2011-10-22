@@ -12,3 +12,24 @@ This small extension provides bindings to use the Chromium Language Detector
  3. Checkout this project
  4. Run `phpize && ./configure && make && sudo make install`
  5. Add `extension=ccld.so` to your `php.ini`
+
+## Usage
+```php
+var_dump(CCLD\detect("Ein bisschen deutschprachiger Text"));
+```
+will return
+```
+array(1) {
+  [0]=>
+  array(4) {
+    ["name"]=>
+    string(6) "GERMAN"
+    ["code"]=>
+    string(2) "de"
+    ["reliable"]=>
+    bool(true)
+    ["bytes"]=>
+    int(37)
+  }
+}
+```
