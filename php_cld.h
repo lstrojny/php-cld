@@ -19,28 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#ifndef PHP_CCLD_H
-#define PHP_CCLD_H
-#define CCLD_VERSION "0.0.1"
+#ifndef PHP_CLD_H
+#define PHP_CLD_H
+#define CLD_VERSION "0.0.1"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
 #include "php.h"
 
-extern zend_module_entry ccld_module_entry;
-#define phpext_ccld_ptr &ccld_module_entry
+extern zend_module_entry cld_module_entry;
+#define phpext_cld_ptr &cld_module_entry
 
-PHP_MINIT_FUNCTION(ccld);
-PHP_MSHUTDOWN_FUNCTION(ccld);
-PHP_MINFO_FUNCTION(ccld);
+PHP_MINIT_FUNCTION(cld);
+PHP_MSHUTDOWN_FUNCTION(cld);
+PHP_MINFO_FUNCTION(cld);
 
-PHP_FUNCTION(ccld_detect);
+PHP_FUNCTION(cld_detect);
 
 #ifdef ZTS
-#define CCLD(v) TSRMG(ccld_globals_id, zend_ccld_globals *, v)
+#define CLD(v) TSRMG(cld_globals_id, zend_cld_globals *, v)
 #else
-#define CCLD(v) (ccld_globals.v)
+#define CLD(v) (cld_globals.v)
 #endif
 
 #ifdef ZTS

@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-#include "php_ccld.h"
+#include "php_cld.h"
 
 #include <stdio.h>
 #include "php.h"
@@ -30,7 +30,7 @@
 #include "encodings/proto/encodings.pb.h"
 
 
-ZEND_BEGIN_ARG_INFO(arginfo_ccld_detect, 1)
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detect, 1)
 	ZEND_ARG_INFO(0, text)
 	ZEND_ARG_INFO(0, is_plain_text)
 	ZEND_ARG_INFO(0, include_extended_languages)
@@ -39,44 +39,44 @@ ZEND_BEGIN_ARG_INFO(arginfo_ccld_detect, 1)
 	ZEND_ARG_INFO(0, encoding_hint)
 ZEND_END_ARG_INFO()
 
-static const zend_function_entry ccld_functions[] = {
-	ZEND_NS_FENTRY("CCLD", detect, ZEND_FN(ccld_detect), arginfo_ccld_detect, 0)
+static const zend_function_entry cld_functions[] = {
+	ZEND_NS_FENTRY("CLD", detect, ZEND_FN(cld_detect), arginfo_cld_detect, 0)
 	{NULL, NULL, NULL}
 };
 
 
-PHP_MINIT_FUNCTION(ccld)
+PHP_MINIT_FUNCTION(cld)
 {
 	return SUCCESS;
 }
 
-PHP_MSHUTDOWN_FUNCTION(ccld)
+PHP_MSHUTDOWN_FUNCTION(cld)
 {
 	return SUCCESS;
 }
 
-PHP_MINFO_FUNCTION(ccld)
+PHP_MINFO_FUNCTION(cld)
 {
 }
 
-zend_module_entry ccld_module_entry = {
+zend_module_entry cld_module_entry = {
 	STANDARD_MODULE_HEADER,
-	"ccld",
-	ccld_functions,
-	PHP_MINIT(ccld),
-	PHP_MSHUTDOWN(ccld),
+	"cld",
+	cld_functions,
+	PHP_MINIT(cld),
+	PHP_MSHUTDOWN(cld),
 	NULL,
 	NULL,
-	PHP_MINFO(ccld),
-	CCLD_VERSION,
+	PHP_MINFO(cld),
+	CLD_VERSION,
 	STANDARD_MODULE_PROPERTIES
 };
 
-#if COMPILE_DL_CCLD
-ZEND_GET_MODULE(ccld)
+#if COMPILE_DL_CLD
+ZEND_GET_MODULE(cld)
 #endif
 
-PHP_FUNCTION(ccld_detect)
+PHP_FUNCTION(cld_detect)
 {
 	int text_len,
 		is_plain_text = 0,

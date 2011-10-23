@@ -1,4 +1,4 @@
-# PHP Bindings for Chromium Compact Language Detector (CCLD)
+# PHP Bindings for Chromium Compact Language Detector (CLD)
 
 This small extension provides bindings to use the Chromium Compact Language Detector
 (http://code.google.com/p/chromium-compact-language-detector/) in PHP.
@@ -10,9 +10,8 @@ This small extension provides bindings to use the Chromium Compact Language Dete
     https://code.google.com/p/chromium-compact-language-detector`
  2. Run `./build.sh`
  3. Checkout this project
- 4. Edit `config.m4` and set the variable `CCLD_LIBDIR` to the directory where CCLD is located
- 5. Run `phpize && ./configure && make && sudo make install`
- 6. Add `extension=ccld.so` to your `php.ini`
+ 4. Run `phpize && ./configure --with-libcld-dir=... && make && sudo make install`
+ 5. Add `extension=cld.so` to your `php.ini`
 
 ## Usage
 ```php
