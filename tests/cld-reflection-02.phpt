@@ -4,9 +4,7 @@ ReflectionExtension::getFunctions() for CLD\detect()
 <?php
 $re = new ReflectionExtension('cld');
 $fn = $re->getFunctions();
-var_dump(array_map($fn, function($f) {
-	return $f->getName();
-}));
+var_dump(array_map(function($f) {return $f->getName();}, $fn));
 ?>
 ==DONE==
 --XFAIL--
