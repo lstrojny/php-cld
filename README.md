@@ -17,6 +17,7 @@ This small extension provides bindings to use the Chromium Compact Language Dete
 ```php
 <?php
 var_export(CLD\detect("Ein bisschen deutschprachiger Text"));
+var_export(CLD\detect("日[の]本([の]国", false, true, null, CLD\Language::JAPANESE, CLD\Encoding::JAPANESE_EUC_JP));
 ```
 
 will return
@@ -29,6 +30,22 @@ array (
     'code' => 'de',
     'reliable' => true,
     'bytes' => 37,
+  ),
+)
+array (
+  0 =>
+  array (
+    'name' => 'Japanese',
+    'code' => 'ja',
+    'reliable' => true,
+    'bytes' => 22,
+  ),
+  1 =>
+  array (
+    'name' => 'Chinese',
+    'code' => 'zh',
+    'reliable' => true,
+    'bytes' => 22,
   ),
 )
 ```

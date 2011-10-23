@@ -27,8 +27,9 @@
  */
 #include "php_cld.h"
 
-#include <stdio.h>
-#include "php.h"
+#include <ctype.h>
+#include "ext/standard/info.h"
+#include "ext/standard/php_string.h"
 
 #define CLD_WINDOWS
 #include "encodings/public/encodings.h"
@@ -54,12 +55,29 @@ static const zend_function_entry cld_functions[] = {
 	{NULL, NULL, NULL}
 };
 
+char *cld_strtoupper(char *s, size_t len)
+{
+    unsigned char *c, *e;
+
+    c = (unsigned char *)s;
+    e = (unsigned char *)c+len;
+
+    while (c < e) {
+        *c = toupper(*c);
+        c++;
+    }
+    return s;
+}
 
 PHP_MINIT_FUNCTION(cld)
 {
 	int a;
+	size_t constant_name_len;
 	const char *code;
-	zend_class_entry ce_language, ce_encoding;
+	char *constant_name;
+
+	zend_class_entry ce_language,
+		ce_encoding;
 
 	INIT_CLASS_ENTRY(ce_language, ZEND_NS_NAME("CLD", "Language"), NULL);
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
@@ -73,7 +91,13 @@ PHP_MINIT_FUNCTION(cld)
 		} else {
 			code = kLanguageInfoTable[a].language_code_other_;
 		}
-		zend_declare_class_constant_string(cld_language_ce, kLanguageInfoTable[a].language_name_, strlen(kLanguageInfoTable[a].language_name_), code TSRMLS_DC);
+
+		constant_name = (char *)kLanguageInfoTable[a].language_name_;
+		constant_name_len = strlen(constant_name);
+		constant_name = estrndup(constant_name, constant_name_len);
+		cld_strtoupper(constant_name, constant_name_len);
+		zend_declare_class_constant_string(cld_language_ce, constant_name, constant_name_len, code TSRMLS_DC);
+		efree(constant_name);
 	}
 
 	INIT_CLASS_ENTRY(ce_encoding, ZEND_NS_NAME("CLD", "Encoding"), NULL);
@@ -109,25 +133,29 @@ zend_module_entry cld_module_entry = {
 	STANDARD_MODULE_PROPERTIES
 };
 
+extern "C" {
 #if COMPILE_DL_CLD
 ZEND_GET_MODULE(cld)
 #endif
+}
 
 PHP_FUNCTION(cld_detect)
 {
-	int text_len,
-		is_plain_text = 0,
+	int is_plain_text = 0,
 		include_extended_languages = 1,
 		encoding_hint = UNKNOWN_LANGUAGE,
 		percentages[3],
 		bytes,
 		i,
+		text_len,
 		language_hint_name_len,
-		top_level_domain_hint_len;
+		top_level_domain_hint_len,
+		language_name_len;
 
 	bool reliable;
 
 	char *text,
+		*language_name,
 		*top_level_domain_hint = NULL,
 		*language_hint_name = NULL;
 
@@ -151,7 +179,7 @@ PHP_FUNCTION(cld_detect)
 	if (language_hint_name_len == 0 || language_hint_name == NULL) {
 		language_hint = UNKNOWN_LANGUAGE;
 	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code given");
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", language_hint_name);
 		RETURN_NULL();
 	}
 
@@ -163,15 +191,16 @@ PHP_FUNCTION(cld_detect)
 
 	if (include_extended_languages) {
 
-		CompactLangDet::ExtDetectLanguageSummary(0, text, text_len, is_plain_text != 0,
+		CompactLangDet::ExtDetectLanguageSummary(0, text, text_len, is_plain_text,
 			top_level_domain_hint, encoding_hint, language_hint,
 			languages, percentages, normalized_score, &bytes, &reliable);
 	} else {
 
-		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text != 0,
+		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text,
 			top_level_domain_hint, encoding_hint, language_hint,
 			languages, percentages, &bytes, &reliable);
 	}
+
 
 	array_init(return_value);
 	for (i = 0; i < 3; i++) {
@@ -183,7 +212,11 @@ PHP_FUNCTION(cld_detect)
 
 		MAKE_STD_ZVAL(detail);
 		array_init(detail);
-		add_assoc_string(detail, "name", (char *)ExtLanguageName(language), 1);
+		language_name = (char *)ExtLanguageName(language);
+		language_name_len = strlen(language_name);
+		language_name = estrndup(language_name, language_name_len);
+		cld_strtoupper(language_name, language_name_len);
+		add_assoc_string(detail, "name", language_name, 0);
 		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
 		add_assoc_bool(detail, "reliable", reliable);
 		add_assoc_long(detail, "bytes", bytes);

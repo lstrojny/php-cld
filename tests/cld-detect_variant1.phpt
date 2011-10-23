@@ -4,7 +4,7 @@ CLD\detect() basic behavior
 <?php
 var_dump(CLD\detect("Das ist ein bisschen deutschsprachiger Text", true));
 var_dump(CLD\detect("This is a little bit of english text", false, true, '.no', CLD\Language::NORWEGIAN));
-var_dump(CLD\detect("日[の]本([の]国", false, true, '.no', null, CLD\Encoding::JAPANESE_EUC_JP));
+var_dump(CLD\detect("日[の]本([の]国", false, true, null, null, CLD\Encoding::JAPANESE_EUC_JP));
 var_dump(CLD\detect("<a>Hello world, how are you today</a>", false, true));
 ?>
 ==DONE==
@@ -50,7 +50,7 @@ array(2) {
   [0]=>
   array(4) {
     ["name"]=>
-    string(8) "Japanese"
+    string(8) "JAPANESE"
     ["code"]=>
     string(2) "ja"
     ["reliable"]=>
@@ -61,7 +61,7 @@ array(2) {
   [1]=>
   array(4) {
     ["name"]=>
-    string(7) "Chinese"
+    string(7) "CHINESE"
     ["code"]=>
     string(2) "zh"
     ["reliable"]=>
