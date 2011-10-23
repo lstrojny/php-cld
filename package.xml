@@ -2,7 +2,7 @@
 	<name>cld</name>
     <channel>pecl.php.net</channel>
 	<summary>PHP Bindings for Chromium Compact Language Detector</summary>
-	<description>Provides a single function CLD\detect() to detect languages from text</description>
+	<description>Exposes Chromium Compact Language Detector to PHP as CLD\\detect() to find out what language a text is</description>
 	<lead>
 		<name>Lars Strojny</name>
 		<user>lstrojny</user>
