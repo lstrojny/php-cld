@@ -31,12 +31,13 @@
 #include "php.h"
 
 #define CLD_WINDOWS
+#include "encodings/public/encodings.h"
 #include "encodings/compact_lang_det/compact_lang_det.h"
 #include "encodings/compact_lang_det/ext_lang_enc.h"
 #include "encodings/proto/encodings.pb.h"
 
 
-ZEND_BEGIN_ARG_INFO(arginfo_cld_detect, 1)
+ZEND_BEGIN_ARG_INFO_EX(arginfo_cld_detect, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
 	ZEND_ARG_INFO(0, is_plain_text)
 	ZEND_ARG_INFO(0, include_extended_languages)
