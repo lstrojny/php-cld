@@ -25,10 +25,10 @@ will return
 array (
   0 =>
   array (
-    'name' => 'ENGLISH',
-    'code' => 'en',
+    'name' => 'GERMAN',
+    'code' => 'de',
     'reliable' => true,
-    'bytes' => 93,
+    'bytes' => 37,
   ),
 )
 ```
