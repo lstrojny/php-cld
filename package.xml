@@ -9,9 +9,9 @@
 		<email>lstrojny@php.net</email>
 		<active>yes</active>
 	</lead>
-	<date>2011-10-23</date>
+	<date>2011-10-24</date>
 	<version>
-		<release>0.1.0</release>
+		<release>0.2.0</release>
 		<api>0.1</api>
 	</version>
 	<stability>
@@ -20,7 +20,7 @@
 	</stability>
 	<license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
 	<notes>
-- Initial release
+- Compatibility with latest HEAD of libcld
 	</notes>
 	<contents>
 		<dir name="/">
