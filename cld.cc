@@ -57,16 +57,16 @@ static const zend_function_entry cld_functions[] = {
 
 char *cld_strtoupper(char *s, size_t len)
 {
-    unsigned char *c, *e;
+	unsigned char *c, *e;
 
-    c = (unsigned char *)s;
-    e = (unsigned char *)c+len;
+	c = (unsigned char *)s;
+	e = (unsigned char *)c+len;
 
-    while (c < e) {
-        *c = toupper(*c);
-        c++;
-    }
-    return s;
+	while (c < e) {
+		*c = toupper(*c);
+		c++;
+	}
+	return s;
 }
 
 PHP_MINIT_FUNCTION(cld)
@@ -163,7 +163,7 @@ PHP_FUNCTION(cld_detect)
 		language,
 		language_hint;
 
-	double normalized_score[3];
+	double normalized_score;
 
 	zval *detail;
 
@@ -189,17 +189,9 @@ PHP_FUNCTION(cld_detect)
 	}
 
 
-	if (include_extended_languages) {
-
-		CompactLangDet::ExtDetectLanguageSummary(0, text, text_len, is_plain_text,
-			top_level_domain_hint, encoding_hint, language_hint,
-			languages, percentages, normalized_score, &bytes, &reliable);
-	} else {
-
-		CompactLangDet::DetectLanguageSummary(0, text, text_len, is_plain_text,
-			top_level_domain_hint, encoding_hint, language_hint,
-			languages, percentages, &bytes, &reliable);
-	}
+	CompactLangDet::DetectLanguage(0, text, text_len, is_plain_text,
+		include_extended_languages, 1, 0, top_level_domain_hint, encoding_hint,
+		language_hint, languages, percentages, &normalized_score, &bytes, &reliable);
 
 
 	array_init(return_value);
