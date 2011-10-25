@@ -72,7 +72,6 @@ char *cld_strtoupper(char *s, size_t len)
 PHP_MINIT_FUNCTION(cld)
 {
 	int a;
-	int langIDX;
 
 	zend_class_entry ce_language,
 		ce_encoding;
@@ -81,14 +80,15 @@ PHP_MINIT_FUNCTION(cld)
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
 	cld_language_ce->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
-	for (langIDX = 0; langIDX < NUM_LANGUAGES; langIDX++) {
+	for (a = 0; a < NUM_LANGUAGES; a++) {
 		size_t constant_name_len;
 		const char *code;
 		char *constant_name;
 
-		code              = LanguageCode((Language) langIDX);
-		constant_name     = estrndup(LanguageName((Language) langIDX), constant_name_len);
+		code = LanguageCode((Language) a);
+		constant_name = (char*)LanguageName((Language) a);
 		constant_name_len = strlen(constant_name);
+		constant_name = estrndup(constant_name, constant_name_len);
 		cld_strtoupper(constant_name, constant_name_len);
 		zend_declare_class_constant_string(cld_language_ce, constant_name, constant_name_len, code TSRMLS_CC);
 
