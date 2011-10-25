@@ -9,9 +9,9 @@
 		<email>lstrojny@php.net</email>
 		<active>yes</active>
 	</lead>
-	<date>2011-10-24</date>
+	<date>2011-10-25</date>
 	<version>
-		<release>0.3.0-dev</release>
+		<release>0.3.0</release>
 		<api>0.1</api>
 	</version>
 	<stability>
