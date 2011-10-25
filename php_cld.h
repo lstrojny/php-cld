@@ -27,7 +27,7 @@
  */
 #ifndef PHP_CLD_H
 #define PHP_CLD_H
-#define CLD_VERSION "0.1.0"
+#define CLD_VERSION "0.4.0-dev"
 
 #ifdef HAVE_CONFIG_H
 #include "config.h"
