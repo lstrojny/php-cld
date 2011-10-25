@@ -1,12 +1,12 @@
 ARG_WITH("cld", "Chromium Compact Language Detector", "no");
 
 if (PHP_CLD != "no") {
-	if (CHECK_LIB("libxl.lib", "cld", PHP_CLD) && CHECK_HEADER_ADD_INCLUDE("libxl.h", "CFLAGS_CLD")) {
+	if (CHECK_LIB("libcld_a.lib", "cld", PHP_CLD)&& CHECK_HEADER_ADD_INCLUDE("encodings/lang_enc.h", "CFLAGS_CLD", PHP_CLD +  ";" + PHP_PHP_BUILD + "\\include\\cld")) {
 		EXTENSION("cld", " cld.cc", PHP_CLD_SHARED);
 		AC_DEFINE('HAVE_LIBCLD', 1, 'Have LibCLD library');
 		AC_DEFINE('HAVE_CLD', 1, 'Have CLD support');
 	} else {
-		WARNING("excel not enabled; libraries and headers not found");
+		WARNING("cld not enabled; libraries and headers not found");
 		PHP_CLD = "no";
 	}
 }
