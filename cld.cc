@@ -28,15 +28,15 @@
 #include "php_cld.h"
 
 #include <ctype.h>
-#include "ext/standard/info.h"
-#include "ext/standard/php_string.h"
-
 #define CLD_WINDOWS
-#include "encodings/public/encodings.h"
+
 #include "encodings/compact_lang_det/compact_lang_det.h"
 #include "encodings/compact_lang_det/ext_lang_enc.h"
-#include "languages/internal/languages.cc"
+#include "base/string_util.h"
 #include "cld_encodings.h"
+
+#include "ext/standard/info.h"
+#include "ext/standard/php_string.h"
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_cld_detect, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
@@ -72,9 +72,7 @@ char *cld_strtoupper(char *s, size_t len)
 PHP_MINIT_FUNCTION(cld)
 {
 	int a;
-	size_t constant_name_len;
-	const char *code;
-	char *constant_name;
+	int langIDX;
 
 	zend_class_entry ce_language,
 		ce_encoding;
@@ -83,20 +81,17 @@ PHP_MINIT_FUNCTION(cld)
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
 	cld_language_ce->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
-	for (a = 0; a < NUM_LANGUAGES; a++) {
-		if (kLanguageInfoTable[a].language_code_639_1_ != NULL) {
-			code = kLanguageInfoTable[a].language_code_639_1_;
-		} else if (kLanguageInfoTable[a].language_code_639_2_ != NULL) {
-			code = kLanguageInfoTable[a].language_code_639_2_;
-		} else {
-			code = kLanguageInfoTable[a].language_code_other_;
-		}
+	for (langIDX = 0; langIDX < NUM_LANGUAGES; langIDX++) {
+		size_t constant_name_len;
+		const char *code;
+		char *constant_name;
 
-		constant_name = (char *)kLanguageInfoTable[a].language_name_;
+		code              = LanguageCode((Language) langIDX);
+		constant_name     = estrndup(LanguageName((Language) langIDX), constant_name_len);
 		constant_name_len = strlen(constant_name);
-		constant_name = estrndup(constant_name, constant_name_len);
 		cld_strtoupper(constant_name, constant_name_len);
-		zend_declare_class_constant_string(cld_language_ce, constant_name, constant_name_len, code TSRMLS_DC);
+		zend_declare_class_constant_string(cld_language_ce, constant_name, constant_name_len, code TSRMLS_CC);
+
 		efree(constant_name);
 	}
 
@@ -105,16 +100,12 @@ PHP_MINIT_FUNCTION(cld)
 	cld_encoding_ce->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
 	for (a = 0; a < NUM_ENCODINGS; a++) {
-		zend_declare_class_constant_long(cld_encoding_ce, cld_encoding_info[a].name, strlen(cld_encoding_info[a].name), (long)cld_encoding_info[a].encoding TSRMLS_DC);
+		zend_declare_class_constant_long((zend_class_entry *)cld_encoding_ce,  (const char *)cld_encoding_info[a].name, (size_t)strlen(cld_encoding_info[a].name), (long)cld_encoding_info[a].encoding TSRMLS_CC);
 	}
 
 	return SUCCESS;
 }
 
-PHP_MSHUTDOWN_FUNCTION(cld)
-{
-	return SUCCESS;
-}
 
 PHP_MINFO_FUNCTION(cld)
 {
@@ -125,7 +116,7 @@ zend_module_entry cld_module_entry = {
 	"cld",
 	cld_functions,
 	PHP_MINIT(cld),
-	PHP_MSHUTDOWN(cld),
+	NULL,
 	NULL,
 	NULL,
 	PHP_MINFO(cld),
