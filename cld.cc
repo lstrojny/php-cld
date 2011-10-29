@@ -47,8 +47,46 @@ ZEND_BEGIN_ARG_INFO_EX(arginfo_cld_detect, 0, 0, 1)
 	ZEND_ARG_INFO(0, encoding_hint)
 ZEND_END_ARG_INFO()
 
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_setIncludeExtendedLanguages, 1)
+	ZEND_ARG_INFO(0, includeExtendedLanguages)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_setTopLevelDomainHint, 1)
+	ZEND_ARG_INFO(0, topLevelDomainHint)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_setLanguageHint, 1)
+	ZEND_ARG_INFO(0, languageHint)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_setEncodingHint, 1)
+	ZEND_ARG_INFO(0, encodingHint)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO_EX(arginfo_cld_detector_detect, 0, 0, 1)
+	ZEND_ARG_INFO(0, text)
+	ZEND_ARG_INFO(0, isPlainText)
+ZEND_END_ARG_INFO()
+
+ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_get, 0)
+ZEND_END_ARG_INFO()
+
 static zend_class_entry *cld_language_ce;
 static zend_class_entry *cld_encoding_ce;
+static zend_class_entry *cld_detector_ce;
+
+static zend_function_entry cld_detector_methods[] = {
+	PHP_ME(cld_detector, setIncludeExtendedLanguages,	arginfo_cld_detector_setIncludeExtendedLanguages,	ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, getIncludeExtendedLanguages,	arginfo_cld_detector_get,							ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, setTopLevelDomainHint,		arginfo_cld_detector_setTopLevelDomainHint,			ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, getTopLevelDomainHint,		arginfo_cld_detector_get,							ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, setLanguageHint,				arginfo_cld_detector_setLanguageHint,				ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, getLanguageHint,				arginfo_cld_detector_get,							ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, setEncodingHint,				arginfo_cld_detector_setEncodingHint,				ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, getEncodingHint,				arginfo_cld_detector_get,							ZEND_ACC_PUBLIC)
+	PHP_ME(cld_detector, detect,						arginfo_cld_detector_detect,						ZEND_ACC_PUBLIC)
+	{NULL, NULL, NULL}
+};
 
 static const zend_function_entry cld_functions[] = {
 	ZEND_NS_FENTRY("CLD", detect, ZEND_FN(cld_detect), arginfo_cld_detect, 0)
@@ -74,7 +112,12 @@ PHP_MINIT_FUNCTION(cld)
 	int a;
 
 	zend_class_entry ce_language,
-		ce_encoding;
+		ce_encoding,
+		ce_detector;
+
+	INIT_CLASS_ENTRY(ce_detector, ZEND_NS_NAME("CLD", "Detector"), cld_detector_methods);
+	cld_detector_ce = zend_register_internal_class(&ce_detector TSRMLS_CC);
+	zend_declare_property_bool(cld_detector_ce, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, FALSE, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	INIT_CLASS_ENTRY(ce_language, ZEND_NS_NAME("CLD", "Language"), NULL);
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
@@ -206,3 +249,49 @@ PHP_FUNCTION(cld_detect)
 		add_next_index_zval(return_value, detail);
 	}
 }
+
+PHP_METHOD(cld_detector, setIncludeExtendedLanguages)
+{
+	zval *obj;
+
+	int include;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ob", &obj, cld_detector_ce, &include) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	zend_update_property_bool(cld_detector_ce, obj, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, include TSRMLS_CC);
+}
+
+PHP_METHOD(cld_detector, getIncludeExtendedLanguages)
+{
+	zval *obj, *include;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &obj, cld_detector_ce) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	include = zend_read_property(cld_detector_ce, obj, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, 0 TSRMLS_CC);
+	RETVAL_ZVAL(include, 1, 0);
+}
+
+PHP_METHOD(cld_detector, setTopLevelDomainHint)
+{}
+
+PHP_METHOD(cld_detector, getTopLevelDomainHint)
+{}
+
+PHP_METHOD(cld_detector, setLanguageHint)
+{}
+
+PHP_METHOD(cld_detector, getLanguageHint)
+{}
+
+PHP_METHOD(cld_detector, setEncodingHint)
+{}
+
+PHP_METHOD(cld_detector, getEncodingHint)
+{}
+
+PHP_METHOD(cld_detector, detect)
+{}

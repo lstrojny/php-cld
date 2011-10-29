@@ -46,6 +46,16 @@ PHP_MINFO_FUNCTION(cld);
 
 PHP_FUNCTION(cld_detect);
 
+PHP_METHOD(cld_detector, setIncludeExtendedLanguages);
+PHP_METHOD(cld_detector, getIncludeExtendedLanguages);
+PHP_METHOD(cld_detector, setTopLevelDomainHint);
+PHP_METHOD(cld_detector, getTopLevelDomainHint);
+PHP_METHOD(cld_detector, setLanguageHint);
+PHP_METHOD(cld_detector, getLanguageHint);
+PHP_METHOD(cld_detector, setEncodingHint);
+PHP_METHOD(cld_detector, getEncodingHint);
+PHP_METHOD(cld_detector, detect);
+
 char *cld_strtoupper(char *s, size_t len);
 
 #ifdef ZTS
