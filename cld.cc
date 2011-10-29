@@ -118,6 +118,7 @@ PHP_MINIT_FUNCTION(cld)
 	INIT_CLASS_ENTRY(ce_detector, ZEND_NS_NAME("CLD", "Detector"), cld_detector_methods);
 	cld_detector_ce = zend_register_internal_class(&ce_detector TSRMLS_CC);
 	zend_declare_property_bool(cld_detector_ce, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, FALSE, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(cld_detector_ce, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	INIT_CLASS_ENTRY(ce_language, ZEND_NS_NAME("CLD", "Language"), NULL);
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
@@ -265,7 +266,8 @@ PHP_METHOD(cld_detector, setIncludeExtendedLanguages)
 
 PHP_METHOD(cld_detector, getIncludeExtendedLanguages)
 {
-	zval *obj, *include;
+	zval *obj,
+		*include;
 
 	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &obj, cld_detector_ce) == FAILURE) {
 		RETURN_NULL();
@@ -276,10 +278,34 @@ PHP_METHOD(cld_detector, getIncludeExtendedLanguages)
 }
 
 PHP_METHOD(cld_detector, setTopLevelDomainHint)
-{}
+{
+	zval *obj;
+	char *hint;
+	int len;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &obj, cld_detector_ce, &hint, &len) == FAILURE) {
+		RETURN_NULL();
+	}
+
+	if (len > 0) {
+		zend_update_property_stringl(cld_detector_ce, obj, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, hint, len TSRMLS_CC);
+	} else {
+		zend_update_property_null(cld_detector_ce, obj, "topLevelDomainHint", sizeof("topLevelDomainHint")-1 TSRMLS_CC);
+	}
+}
 
 PHP_METHOD(cld_detector, getTopLevelDomainHint)
-{}
+{
+	zval *obj,
+		*hint = NULL;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &obj, cld_detector_ce)) {
+		RETURN_NULL();
+	}
+
+	hint = zend_read_property(cld_detector_ce, obj, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, 0 TSRMLS_CC);
+	RETVAL_ZVAL(hint, 1, 0);
+}
 
 PHP_METHOD(cld_detector, setLanguageHint)
 {}

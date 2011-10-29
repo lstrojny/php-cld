@@ -1,5 +1,5 @@
 --TEST--
-CLD\Detector basic functionality
+void CLD\Detector::setIncludeExtendedLanguages(bool true) / bool CLD\Detector::getIncludeExtendedLanguages()
 --FILE--
 <?php
 $detector = new CLD\Detector();
