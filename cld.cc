@@ -107,6 +107,20 @@ char *cld_strtoupper(char *s, size_t len)
 	return s;
 }
 
+char *cld_strtolower(char *s, size_t len)
+{
+	unsigned char *c, *e;
+
+	c = (unsigned char *)s;
+	e = (unsigned char *)c+len;
+
+	while (c < e) {
+		*c = tolower(*c);
+		c++;
+	}
+	return s;
+}
+
 PHP_MINIT_FUNCTION(cld)
 {
 	int a;
@@ -119,6 +133,7 @@ PHP_MINIT_FUNCTION(cld)
 	cld_detector_ce = zend_register_internal_class(&ce_detector TSRMLS_CC);
 	zend_declare_property_bool(cld_detector_ce, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, FALSE, ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_null(cld_detector_ce, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_null(cld_detector_ce, "languageHint", sizeof("languageHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	INIT_CLASS_ENTRY(ce_language, ZEND_NS_NAME("CLD", "Language"), NULL);
 	cld_language_ce = zend_register_internal_class(&ce_language TSRMLS_CC);
@@ -297,7 +312,7 @@ PHP_METHOD(cld_detector, setTopLevelDomainHint)
 PHP_METHOD(cld_detector, getTopLevelDomainHint)
 {
 	zval *obj,
-		*hint = NULL;
+		*hint;
 
 	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &obj, cld_detector_ce)) {
 		RETURN_NULL();
@@ -308,10 +323,46 @@ PHP_METHOD(cld_detector, getTopLevelDomainHint)
 }
 
 PHP_METHOD(cld_detector, setLanguageHint)
-{}
+{
+	zval *obj;
+	char *hint;
+	int len;
+	Language lang;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Os", &obj, cld_detector_ce, &hint, &len) == FAILURE) {
+		RETURN_NULL();
+	}
+
+
+	if (len > 0) {
+
+		hint = estrndup(hint, len);
+		cld_strtolower(hint, len);
+
+		if (!LanguageFromCode(hint, &lang)) {
+			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", hint);
+		} else {
+			zend_update_property_stringl(cld_detector_ce, obj, "languageHint", sizeof("languageHint")-1, hint, len TSRMLS_CC);
+		}
+
+		efree(hint);
+	} else {
+		zend_update_property_null(cld_detector_ce, obj, "languageHint", sizeof("languageHint")-1 TSRMLS_CC);
+	}
+}
 
 PHP_METHOD(cld_detector, getLanguageHint)
-{}
+{
+	zval *obj,
+		*hint;
+
+	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &obj, cld_detector_ce)) {
+		RETURN_NULL();
+	}
+
+	hint = zend_read_property(cld_detector_ce, obj, "languageHint", sizeof("languageHint")-1, 0 TSRMLS_CC);
+	RETVAL_ZVAL(hint, 1, 0);
+}
 
 PHP_METHOD(cld_detector, setEncodingHint)
 {}
