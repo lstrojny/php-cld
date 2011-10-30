@@ -47,6 +47,7 @@
                 <file name="cld-reflection-04.phpt" role="test"/>
                 <file name="cld-reflection-05.phpt" role="test"/>
                 <file name="cld-reflection-06.phpt" role="test"/>
+                <file name="cld-detector-subclass.phpt" role="test"/>
             </dir>
 		</dir>
     </contents>
