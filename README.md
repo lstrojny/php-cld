@@ -49,14 +49,14 @@ array (
 array (
   0 =>
   array (
-    'name' => 'Japanese',
+    'name' => 'JAPANESE',
     'code' => 'ja',
     'reliable' => true,
     'bytes' => 22,
   ),
   1 =>
   array (
-    'name' => 'Chinese',
+    'name' => 'CHINESE',
     'code' => 'zh',
     'reliable' => true,
     'bytes' => 22,
