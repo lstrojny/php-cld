@@ -98,7 +98,7 @@ static const zend_function_entry cld_functions[] = {
 	{NULL, NULL, NULL}
 };
 
-char *cld_strtoupper(char *s, size_t len)
+PHPAPI char *cld_strtoupper(char *s, size_t len)
 {
 	unsigned char *c, *e;
 
@@ -112,7 +112,7 @@ char *cld_strtoupper(char *s, size_t len)
 	return s;
 }
 
-char *cld_strtolower(char *s, size_t len)
+PHPAPI char *cld_strtolower(char *s, size_t len)
 {
 	unsigned char *c, *e;
 
@@ -124,6 +124,68 @@ char *cld_strtolower(char *s, size_t len)
 		c++;
 	}
 	return s;
+}
+
+PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_plain_text, int include_extended_languages, char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
+{
+	int percentages[3],
+		bytes,
+		language_name_len,
+		i;
+
+	bool reliable;
+
+	Language languages[3],
+		language,
+		language_hint;
+
+	char *language_name;
+
+	double normalized_score;
+
+	zval *detail;
+
+
+	if (language_hint_name_len == 0 || language_hint_name == NULL) {
+		language_hint = UNKNOWN_LANGUAGE;
+	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", language_hint_name);
+		return FAILURE;
+	}
+
+
+	if (encoding_hint == -1) {
+		encoding_hint = UNKNOWN_ENCODING;
+	}
+
+
+	CompactLangDet::DetectLanguage(0, text, text_len, is_plain_text,
+		include_extended_languages, 1, 0, top_level_domain_hint, encoding_hint,
+		language_hint, languages, percentages, &normalized_score, &bytes, &reliable);
+
+
+	array_init(*result);
+	for (i = 0; i < 3; i++) {
+		language = languages[i];
+
+		if (language == UNKNOWN_LANGUAGE) {
+			break;
+		}
+
+		MAKE_STD_ZVAL(detail);
+		array_init(detail);
+		language_name = (char *)ExtLanguageName(language);
+		language_name_len = strlen(language_name);
+		language_name = estrndup(language_name, language_name_len);
+		cld_strtoupper(language_name, language_name_len);
+		add_assoc_string(detail, "name", language_name, 0);
+		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
+		add_assoc_bool(detail, "reliable", reliable);
+		add_assoc_long(detail, "bytes", bytes);
+		add_next_index_zval(*result, detail);
+	}
+
+	return SUCCESS;
 }
 
 PHP_MINIT_FUNCTION(cld)
@@ -212,78 +274,28 @@ PHP_FUNCTION(cld_detect)
 {
 	int is_plain_text = 0,
 		include_extended_languages = 1,
-		encoding_hint = UNKNOWN_LANGUAGE,
-		percentages[3],
-		bytes,
-		i,
-		text_len,
-		language_hint_name_len,
 		top_level_domain_hint_len,
-		language_name_len;
+		language_hint_name_len,
+		text_len;
 
-	bool reliable;
+	long encoding_hint = -1;
 
 	char *text,
-		*language_name,
 		*top_level_domain_hint = NULL,
 		*language_hint_name = NULL;
 
-	Language languages[3],
-		language,
-		language_hint;
-
-	double normalized_score;
-
-	zval *detail;
-
-
-	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbssl",
-		&text, &text_len, &is_plain_text, &include_extended_languages,
-		&top_level_domain_hint, &top_level_domain_hint_len, &language_hint_name, &language_hint_name_len, &encoding_hint) == FAILURE) {
-
+	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbssl", &text, &text_len, &is_plain_text, &include_extended_languages, &top_level_domain_hint, &top_level_domain_hint_len, &language_hint_name, &language_hint_name_len, &encoding_hint) == FAILURE) {
 		RETURN_NULL();
 	}
 
-
-	if (language_hint_name_len == 0 || language_hint_name == NULL) {
-		language_hint = UNKNOWN_LANGUAGE;
-	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", language_hint_name);
+	if (cld_detect_language(&return_value, text, text_len, is_plain_text, include_extended_languages, top_level_domain_hint, top_level_domain_hint_len, language_hint_name, language_hint_name_len, encoding_hint TSRMLS_CC) == FAILURE) {
 		RETURN_NULL();
 	}
 
-
-	if (encoding_hint == NULL) {
-		encoding_hint = UNKNOWN_ENCODING;
-	}
-
-
-	CompactLangDet::DetectLanguage(0, text, text_len, is_plain_text,
-		include_extended_languages, 1, 0, top_level_domain_hint, encoding_hint,
-		language_hint, languages, percentages, &normalized_score, &bytes, &reliable);
-
-
-	array_init(return_value);
-	for (i = 0; i < 3; i++) {
-		language = languages[i];
-
-		if (language == UNKNOWN_LANGUAGE) {
-			break;
-		}
-
-		MAKE_STD_ZVAL(detail);
-		array_init(detail);
-		language_name = (char *)ExtLanguageName(language);
-		language_name_len = strlen(language_name);
-		language_name = estrndup(language_name, language_name_len);
-		cld_strtoupper(language_name, language_name_len);
-		add_assoc_string(detail, "name", language_name, 0);
-		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
-		add_assoc_bool(detail, "reliable", reliable);
-		add_assoc_long(detail, "bytes", bytes);
-		add_next_index_zval(return_value, detail);
-	}
+	RETVAL_ZVAL(return_value, 0, 0);
 }
+
+
 
 PHP_METHOD(cld_detector, setIncludeExtendedLanguages)
 {

@@ -56,8 +56,9 @@ PHP_METHOD(cld_detector, setEncodingHint);
 PHP_METHOD(cld_detector, getEncodingHint);
 PHP_METHOD(cld_detector, detect);
 
-char *cld_strtoupper(char *s, size_t len);
-char *cld_strtolower(char *s, size_t len);
+PHPAPI char *cld_strtoupper(char *s, size_t len);
+PHPAPI char *cld_strtolower(char *s, size_t len);
+PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_plain_text, int include_extended_languages, char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC);
 
 #ifdef ZTS
 #define CLD(v) TSRMG(cld_globals_id, zend_cld_globals *, v)
