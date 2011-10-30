@@ -14,6 +14,11 @@ var_dump($detector->setLanguageHint(null));
 var_dump($detector->getLanguageHint());
 var_dump($detector->setLanguageHint());
 var_dump($detector->getLanguageHint('param'));
+try {
+	$detector->setLanguageHint("INVALID");
+} catch (CLD\InvalidArgumentException $e) {
+	var_dump(get_class($e), $e->getMessage(), $e->getCode());
+}
 ?>
 ==DONE==
 --EXPECTF--
@@ -32,4 +37,7 @@ NULL
 
 Warning: CLD\Detector::getLanguageHint() expects exactly 0 parameters, 1 given in %scld-detector-languageHint.php on line %d
 NULL
+string(%d) "CLD\InvalidLanguageException"
+string(%d) "Invalid language code "invalid""
+int(100)
 ==DONE==

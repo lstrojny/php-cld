@@ -57,6 +57,7 @@ PHP_METHOD(cld_detector, getEncodingHint);
 PHP_METHOD(cld_detector, detect);
 
 char *cld_strtoupper(char *s, size_t len);
+char *cld_strtolower(char *s, size_t len);
 
 #ifdef ZTS
 #define CLD(v) TSRMG(cld_globals_id, zend_cld_globals *, v)
