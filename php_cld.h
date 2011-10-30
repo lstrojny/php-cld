@@ -54,7 +54,7 @@ PHP_METHOD(cld_detector, setLanguageHint);
 PHP_METHOD(cld_detector, getLanguageHint);
 PHP_METHOD(cld_detector, setEncodingHint);
 PHP_METHOD(cld_detector, getEncodingHint);
-PHP_METHOD(cld_detector, detect);
+PHP_METHOD(cld_detector, detectLanguage);
 
 PHPAPI char *cld_strtoupper(char *s, size_t len);
 PHPAPI char *cld_strtolower(char *s, size_t len);
