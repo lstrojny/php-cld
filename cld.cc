@@ -283,7 +283,12 @@ PHP_MSHUTDOWN_FUNCTION(cld)
 
 PHP_MINFO_FUNCTION(cld)
 {
+	php_info_print_table_start();
+	php_info_print_table_header(2, "CLD (Chromium Language Detector) support", "enabled");
+
 	DISPLAY_INI_ENTRIES();
+
+	php_info_print_table_end();
 }
 
 zend_module_entry cld_module_entry = {
