@@ -19,6 +19,7 @@ try {
 } catch (CLD\InvalidArgumentException $e) {
 	var_dump(get_class($e), $e->getMessage(), $e->getCode());
 }
+var_dump($detector->getLanguageHint());
 ?>
 ==DONE==
 --EXPECTF--
@@ -40,4 +41,5 @@ NULL
 string(%d) "CLD\InvalidLanguageException"
 string(%d) "Invalid language code "invalid""
 int(100)
+NULL
 ==DONE==

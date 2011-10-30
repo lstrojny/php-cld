@@ -161,7 +161,11 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	if (encoding_hint == -1) {
 		encoding_hint = UNKNOWN_ENCODING;
+	} else if (encoding_hint < 0 || encoding_hint > NUM_ENCODINGS) {
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid encoding \"%d\"", encoding_hint);
+		return FAILURE;
 	}
+
 
 	if (CLDG(debug)) {
 		php_printf("TEXT: %s\n", text);
@@ -437,15 +441,15 @@ PHP_METHOD(cld_detector, setEncodingHint)
 		RETURN_NULL();
 	}
 
-	if (hint >= 0) {
-		if (hint > NUM_ENCODINGS) {
-			zend_throw_exception_ex(cld_ce_InvalidEncodingException, 100 TSRMLS_CC, "Invalid encoding \"%d\"", hint TSRMLS_CC);
-		}
 
-		zend_update_property_long(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, hint TSRMLS_CC);
-	} else {
+	if (hint == -1) {
 		zend_update_property_long(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, -1 TSRMLS_CC);
+	} else if (hint < 0 || hint > NUM_ENCODINGS) {
+		zend_throw_exception_ex(cld_ce_InvalidEncodingException, 100 TSRMLS_CC, "Invalid encoding \"%d\"", hint TSRMLS_CC);
+		RETURN_NULL();
 	}
+
+	zend_update_property_long(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, hint TSRMLS_CC);
 }
 
 PHP_METHOD(cld_detector, getEncodingHint)

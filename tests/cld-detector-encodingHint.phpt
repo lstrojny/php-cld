@@ -11,10 +11,17 @@ var_dump($detector->getEncodingHint());
 var_dump($detector->getEncodingHint("arg"));
 var_dump($detector->setEncodingHint());
 try {
-	$detector->setEncodingHint("1000000000");
+	$detector->setEncodingHint(1000000000);
 } catch (CLD\InvalidArgumentException $e) {
 	var_dump(get_class($e), $e->getMessage(), $e->getCode());
 }
+var_dump($detector->getEncodingHint());
+try {
+	$detector->setEncodingHint(-2);
+} catch (CLD\InvalidArgumentException $e) {
+	var_dump(get_class($e), $e->getMessage(), $e->getCode());
+}
+var_dump($detector->getEncodingHint());
 ?>
 ==DONE==
 --EXPECTF--
@@ -32,4 +39,9 @@ NULL
 string(%d) "CLD\InvalidEncodingException"
 string(%d) "Invalid encoding "1000000000""
 int(100)
+int(-1)
+string(%d) "CLD\InvalidEncodingException"
+string(%d) "Invalid encoding "-2""
+int(100)
+int(-1)
 ==DONE==
