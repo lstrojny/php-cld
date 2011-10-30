@@ -18,11 +18,11 @@ try {
 ?>
 ==DONE==
 --EXPECTF--
-NULL
+int(-1)
 NULL
 int(63)
 NULL
-NULL
+int(-1)
 
 Warning: CLD\Detector::getEncodingHint() expects exactly 0 parameters, 1 given in %scld-detector-encodingHint.php on line %d
 NULL
@@ -31,5 +31,5 @@ Warning: CLD\Detector::setEncodingHint() expects exactly 1 parameter, 0 given in
 NULL
 string(%d) "CLD\InvalidEncodingException"
 string(%d) "Invalid encoding "1000000000""
-int(200)
+int(100)
 ==DONE==

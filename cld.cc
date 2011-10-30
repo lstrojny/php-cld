@@ -73,6 +73,10 @@ ZEND_END_ARG_INFO()
 ZEND_BEGIN_ARG_INFO(arginfo_cld_detector_get, 0)
 ZEND_END_ARG_INFO()
 
+PHP_INI_BEGIN()
+	STD_PHP_INI_BOOLEAN("cld.debug", "0", PHP_INI_ALL, OnUpdateBool, debug, zend_cld_globals, cld_globals)
+PHP_INI_END()
+
 static zend_class_entry *cld_ce_Language;
 static zend_class_entry *cld_ce_Encoding;
 static zend_class_entry *cld_ce_Detector;
@@ -92,6 +96,8 @@ static zend_function_entry cld_detector_methods[] = {
 	PHP_ME(cld_detector, detectLanguage,				arginfo_cld_detector_detectLanguage,				ZEND_ACC_PUBLIC)
 	{NULL, NULL, NULL}
 };
+
+ZEND_DECLARE_MODULE_GLOBALS(cld)
 
 static const zend_function_entry cld_functions[] = {
 	ZEND_NS_FENTRY("CLD", detect, ZEND_FN(cld_detect), arginfo_cld_detect, 0)
@@ -145,7 +151,6 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	zval *detail;
 
-
 	if (language_hint_name_len == 0 || language_hint_name == NULL) {
 		language_hint = UNKNOWN_LANGUAGE;
 	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
@@ -156,6 +161,15 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	if (encoding_hint == -1) {
 		encoding_hint = UNKNOWN_ENCODING;
+	}
+
+	if (CLDG(debug)) {
+		php_printf("TEXT: %s\n", text);
+		php_printf("PLAIN TEXT: %d\n", is_plain_text);
+		php_printf("EXTENDED LANGUAGES: %d\n", include_extended_languages);
+		php_printf("TLD: %s\n", top_level_domain_hint);
+		php_printf("LANGUAGE: %s\n", LanguageName(language_hint));
+		php_printf("ENCODING: %d\n", (int)encoding_hint);
 	}
 
 
@@ -201,10 +215,10 @@ PHP_MINIT_FUNCTION(cld)
 
 	INIT_NS_CLASS_ENTRY(ce_Detector, "CLD", "Detector", cld_detector_methods);
 	cld_ce_Detector = zend_register_internal_class(&ce_Detector TSRMLS_CC);
-	zend_declare_property_bool(cld_ce_Detector, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, FALSE, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_bool(cld_ce_Detector, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, TRUE, ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_null(cld_ce_Detector, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
 	zend_declare_property_null(cld_ce_Detector, "languageHint", sizeof("languageHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
-	zend_declare_property_null(cld_ce_Detector, "encodingHint", sizeof("encodingHint")-1, ZEND_ACC_PROTECTED TSRMLS_CC);
+	zend_declare_property_long(cld_ce_Detector, "encodingHint", sizeof("encodingHint")-1, -1, ZEND_ACC_PROTECTED TSRMLS_CC);
 
 	INIT_NS_CLASS_ENTRY(ce_InvalidArgumentException, "CLD", "InvalidArgumentException", NULL);
 	cld_ce_InvalidArgumentException = zend_register_internal_class_ex(&ce_InvalidArgumentException, spl_ce_InvalidArgumentException, NULL TSRMLS_CC);
@@ -235,6 +249,7 @@ PHP_MINIT_FUNCTION(cld)
 		efree(constant_name);
 	}
 
+
 	INIT_NS_CLASS_ENTRY(ce_Encoding, "CLD", "Encoding", NULL);
 	cld_ce_Encoding = zend_register_internal_class(&ce_Encoding TSRMLS_CC);
 	cld_ce_Encoding->ce_flags |= ZEND_ACC_FINAL_CLASS;
@@ -243,12 +258,28 @@ PHP_MINIT_FUNCTION(cld)
 		zend_declare_class_constant_long((zend_class_entry *)cld_ce_Encoding,  (const char *)cld_encoding_info[a].name, (size_t)strlen(cld_encoding_info[a].name), (long)cld_encoding_info[a].encoding TSRMLS_CC);
 	}
 
+
+	ZEND_INIT_MODULE_GLOBALS(cld, cld_init_globals,	NULL);
+	REGISTER_INI_ENTRIES();
+
 	return SUCCESS;
 }
 
+static void cld_init_globals(zend_cld_globals *cld_globals)
+{
+	cld_globals->debug = 0;
+}
+
+PHP_MSHUTDOWN_FUNCTION(cld)
+{
+	UNREGISTER_INI_ENTRIES();
+
+	return SUCCESS;
+}
 
 PHP_MINFO_FUNCTION(cld)
 {
+	DISPLAY_INI_ENTRIES();
 }
 
 zend_module_entry cld_module_entry = {
@@ -256,7 +287,7 @@ zend_module_entry cld_module_entry = {
 	"cld",
 	cld_functions,
 	PHP_MINIT(cld),
-	NULL,
+	PHP_MSHUTDOWN(cld),
 	NULL,
 	NULL,
 	PHP_MINFO(cld),
@@ -272,7 +303,7 @@ ZEND_GET_MODULE(cld)
 
 PHP_FUNCTION(cld_detect)
 {
-	int is_plain_text = 0,
+	int is_plain_text = 1,
 		include_extended_languages = 1,
 		top_level_domain_hint_len,
 		language_hint_name_len,
@@ -286,6 +317,10 @@ PHP_FUNCTION(cld_detect)
 
 	if (zend_parse_parameters(ZEND_NUM_ARGS() TSRMLS_CC, "s|bbssl", &text, &text_len, &is_plain_text, &include_extended_languages, &top_level_domain_hint, &top_level_domain_hint_len, &language_hint_name, &language_hint_name_len, &encoding_hint) == FAILURE) {
 		RETURN_NULL();
+	}
+
+	if (top_level_domain_hint_len == 0) {
+		top_level_domain_hint = NULL;
 	}
 
 	if (cld_detect_language(&return_value, text, text_len, is_plain_text, include_extended_languages, top_level_domain_hint, top_level_domain_hint_len, language_hint_name, language_hint_name_len, encoding_hint TSRMLS_CC) == FAILURE) {
@@ -369,7 +404,7 @@ PHP_METHOD(cld_detector, setLanguageHint)
 		cld_strtolower(hint, len);
 
 		if (!LanguageFromCode(hint, &lang)) {
-			zend_throw_exception_ex(cld_ce_InvalidLanguageException, 100, "Invalid language code \"%s\"", hint);
+			zend_throw_exception_ex(cld_ce_InvalidLanguageException, 100 TSRMLS_CC, "Invalid language code \"%s\"", hint TSRMLS_CC);
 		} else {
 			zend_update_property_stringl(cld_ce_Detector, obj, "languageHint", sizeof("languageHint")-1, hint, len TSRMLS_CC);
 		}
@@ -404,12 +439,12 @@ PHP_METHOD(cld_detector, setEncodingHint)
 
 	if (hint >= 0) {
 		if (hint > NUM_ENCODINGS) {
-			zend_throw_exception_ex(cld_ce_InvalidEncodingException, 200, "Invalid encoding \"%d\"", hint);
+			zend_throw_exception_ex(cld_ce_InvalidEncodingException, 100 TSRMLS_CC, "Invalid encoding \"%d\"", hint TSRMLS_CC);
 		}
 
 		zend_update_property_long(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, hint TSRMLS_CC);
 	} else {
-		zend_update_property_null(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1 TSRMLS_CC);
+		zend_update_property_long(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, -1 TSRMLS_CC);
 	}
 }
 
@@ -432,11 +467,11 @@ PHP_METHOD(cld_detector, detectLanguage)
 		*val;
 
 	char *text,
-		*top_level_domain_hint,
+		*top_level_domain_hint = NULL,
 		*language_hint_name;
 
 	int text_len,
-		is_plain_text = 0,
+		is_plain_text = 1,
 		include_extended_languages,
 		top_level_domain_hint_len,
 		language_hint_name_len;
@@ -451,12 +486,22 @@ PHP_METHOD(cld_detector, detectLanguage)
 	include_extended_languages = Z_BVAL_P(val);
 
 	val = zend_read_property(cld_ce_Detector, obj, "topLevelDomainHint", sizeof("topLevelDomainHint")-1, 0 TSRMLS_CC);
-	top_level_domain_hint = Z_STRVAL_P(val);
-	top_level_domain_hint_len = Z_STRLEN_P(val);
+	if (ZVAL_IS_NULL(val)) {
+		top_level_domain_hint = NULL;
+		top_level_domain_hint_len = 0;
+	} else {
+		top_level_domain_hint = Z_STRVAL_P(val);
+		top_level_domain_hint_len = Z_STRLEN_P(val);
+	}
 
 	val = zend_read_property(cld_ce_Detector, obj, "languageHint", sizeof("languageHint")-1, 0 TSRMLS_CC);
-	language_hint_name = Z_STRVAL_P(val);
-	language_hint_name_len = Z_STRLEN_P(val);
+	if (ZVAL_IS_NULL(val)) {
+		language_hint_name = NULL;
+		language_hint_name_len = 0;
+	} else {
+		language_hint_name = Z_STRVAL_P(val);
+		language_hint_name_len = Z_STRLEN_P(val);
+	}
 
 	val = zend_read_property(cld_ce_Detector, obj, "encodingHint", sizeof("encodingHint")-1, 0 TSRMLS_CC);
 	encoding_hint = Z_LVAL_P(val);
