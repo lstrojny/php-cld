@@ -20,9 +20,9 @@
 	</stability>
 	<license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
 	<notes>
-- New OOP API
-- Better error handling
-- More tests
+- Reflection test case for CLD\InvalidArgumentException, CLD\InvalidLanguageException, CLD\InvalidEncodingException
+- Reflection test case for CLD\Detector
+- Use cld_encodings.h from upstream library instead of our own
 	</notes>
 	<contents>
 		<dir name="/">
@@ -45,6 +45,8 @@
                 <file name="cld-reflection-02.phpt" role="test"/>
                 <file name="cld-reflection-03.phpt" role="test"/>
                 <file name="cld-reflection-04.phpt" role="test"/>
+                <file name="cld-reflection-05.phpt" role="test"/>
+                <file name="cld-reflection-06.phpt" role="test"/>
             </dir>
 		</dir>
     </contents>
