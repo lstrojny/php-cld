@@ -11,7 +11,7 @@
 	</lead>
 	<date>2011-11-15</date>
 	<version>
-		<release>0.5.0</release>
+		<release>0.6.0-dev</release>
 		<api>0.4</api>
 	</version>
 	<stability>
@@ -20,10 +20,7 @@
 	</stability>
 	<license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
 	<notes>
-- Fixing linking on Linux causing the error "undefined symbol _ZNSs4_Rep20_S_empty_rep_storageE"
-- Reflection test case for CLD\InvalidArgumentException, CLD\InvalidLanguageException, CLD\InvalidEncodingException
-- Reflection test case for CLD\Detector
-- Use cld_encodings.h from upstream library instead of our own
+- ???
 	</notes>
 	<contents>
 		<dir name="/">
@@ -65,6 +62,63 @@
     <providesextension>cld</providesextension>
 	<extsrcrelease/>
     <changelog>
+        <release>
+            <date>2011-11-15</date>
+            <version>
+                <release>0.5.0</release>
+                <api>0.4</api>
+            </version>
+            <stability>
+                <release>stable</release>
+                <api>stable</api>
+            </stability>
+            <license uri="http://www.opensource.org/licenses/bsd-license.php">BSD License</license>
+            <notes>
+        - Fixing linking on Linux causing the error "undefined symbol _ZNSs4_Rep20_S_empty_rep_storageE"
+        - Reflection test case for CLD\InvalidArgumentException, CLD\InvalidLanguageException, CLD\InvalidEncodingException
+        - Reflection test case for CLD\Detector
+        - Use cld_encodings.h from upstream library instead of our own
+            </notes>
+            <contents>
+                <dir name="/">
+                    <file name="config.m4" role="src"/>
+                    <file name="config.w32" role="src"/>
+                    <file name="cld.cc" role="src"/>
+                    <file name="php_cld.h" role="src"/>
+                    <dir name="tests">
+                        <file name="cld-classes.phpt" role="test"/>
+                        <file name="cld-detect_basic.phpt" role="test"/>
+                        <file name="cld-detect_error.phpt" role="test"/>
+                        <file name="cld-detect_variant1.phpt" role="test"/>
+                        <file name="cld-detector-detectLanguage.phpt" role="test"/>
+                        <file name="cld-detector-encodingHint.phpt" role="test"/>
+                        <file name="cld-detector-includeExtendedLanguages.phpt" role="test"/>
+                        <file name="cld-detector-languageHint.phpt" role="test"/>
+                        <file name="cld-detector-topLevelDomainHint.phpt" role="test"/>
+                        <file name="cld-invokation.phpt" role="test"/>
+                        <file name="cld-reflection-01.phpt" role="test"/>
+                        <file name="cld-reflection-02.phpt" role="test"/>
+                        <file name="cld-reflection-03.phpt" role="test"/>
+                        <file name="cld-reflection-04.phpt" role="test"/>
+                        <file name="cld-reflection-05.phpt" role="test"/>
+                        <file name="cld-reflection-06.phpt" role="test"/>
+                        <file name="cld-detector-subclass.phpt" role="test"/>
+                    </dir>
+                </dir>
+            </contents>
+            <dependencies>
+                <required>
+                    <php>
+                        <min>5.3</min>
+                    </php>
+                    <pearinstaller>
+                        <min>1.4.3</min>
+                    </pearinstaller>
+                </required>
+            </dependencies>
+            <providesextension>cld</providesextension>
+            <extsrcrelease/>
+        </release>
         <release>
             <date>2011-10-30</date>
             <version>
