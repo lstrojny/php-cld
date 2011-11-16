@@ -7,10 +7,10 @@ env:
   - NO_INTERACTION=1
 
 before_script:
-  - sh -c "hg clone https://code.google.com/p/chromium-compact-language-detector libcld"
-  - sh -c "cd libcld && ./build.sh"
+  - sh -c "cd vendor/libcld && ./build.sh"
   - sh -c "phpize"
-  - sh -c "./configure --with-libcld-dir=libcld"
+  - sh -c "./configure --with-libcld-dir=vendor/libcld"
+  - sh -c "make clean"
   - sh -c "make"
 
 script: make test
