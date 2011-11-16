@@ -7,6 +7,7 @@
 !*.phpt
 !*.php
 !*.sh
+!*.yml
 !config.w32
 !config.m4
 tests/*.diff
