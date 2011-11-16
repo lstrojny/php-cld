@@ -10,7 +10,6 @@ before_script:
   - sh -c "cd vendor/libcld && ./build.sh"
   - sh -c "phpize"
   - sh -c "./configure --with-libcld-dir=vendor/libcld"
-  - sh -c "make clean"
   - sh -c "make"
 
 script: make test
