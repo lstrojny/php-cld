@@ -17,5 +17,6 @@ if test "$PHP_CLD" != "no"; then
     PHP_ADD_LIBRARY(stdc++, 1, CLD_SHARED_LIBADD)
     PHP_ADD_LIBRARY_WITH_PATH(cld, $PHP_LIBCLD_DIR, CLD_SHARED_LIBADD)
     PHP_NEW_EXTENSION(cld, cld.cc, $ext_shared)
+
     CXXFLAGS="-Wall -Wno-write-strings"
 fi
