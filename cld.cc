@@ -314,8 +314,8 @@ PHP_FUNCTION(cld_detect)
 {
 	int is_plain_text = 1,
 		include_extended_languages = 1,
-		top_level_domain_hint_len,
-		language_hint_name_len,
+		top_level_domain_hint_len = 0,
+		language_hint_name_len = 0,
 		text_len;
 
 	long encoding_hint = -1;
