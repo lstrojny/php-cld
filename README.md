@@ -1,4 +1,5 @@
 # PHP Bindings for Chromium Compact Language Detector (CLD)
+[![Build Status](https://secure.travis-ci.org/lstrojny/php-cld.png)](http://travis-ci.org/lstrojny/php-cld)
 
 This small extension provides bindings to use the Chromium Compact Language Detector
 (http://code.google.com/p/chromium-compact-language-detector/) in PHP.
