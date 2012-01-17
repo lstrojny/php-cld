@@ -147,7 +147,7 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	char *language_name;
 
-	double normalized_score;
+	double normalized_scores[3];
 
 	zval *detail;
 
@@ -179,7 +179,7 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	CompactLangDet::DetectLanguage(0, text, text_len, is_plain_text,
 		include_extended_languages, 1, 0, top_level_domain_hint, encoding_hint,
-		language_hint, languages, percentages, &normalized_score, &bytes, &reliable);
+		language_hint, languages, percentages, normalized_scores, &bytes, &reliable);
 
 
 	array_init(*result);
