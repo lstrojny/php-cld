@@ -200,6 +200,8 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
 		add_assoc_bool(detail, "reliable", reliable);
 		add_assoc_long(detail, "bytes", bytes);
+		add_assoc_double(detail, "score", normalized_scores[i]);
+		add_assoc_long(detail, "percent", percentages[i]);
 		add_next_index_zval(*result, detail);
 	}
 
