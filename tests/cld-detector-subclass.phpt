@@ -67,7 +67,7 @@ LANGUAGE: Unknown
 ENCODING: 23
 array(2) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -76,9 +76,13 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(4.0518638573744)
+    ["percent"]=>
+    int(62)
   }
   [1]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ITALIAN"
     ["code"]=>
@@ -87,6 +91,10 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(4.6189376443418)
+    ["percent"]=>
+    int(38)
   }
 }
 TEXT: hello
@@ -97,7 +105,7 @@ LANGUAGE: ENGLISH
 ENCODING: 63
 array(2) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -106,9 +114,13 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(4.0518638573744)
+    ["percent"]=>
+    int(62)
   }
   [1]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ITALIAN"
     ["code"]=>
@@ -117,6 +129,10 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(4.6189376443418)
+    ["percent"]=>
+    int(38)
   }
 }
 NULL
@@ -135,7 +151,7 @@ LANGUAGE: GERMAN
 ENCODING: 63
 array(2) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(6) "GERMAN"
     ["code"]=>
@@ -144,9 +160,13 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(12.386457473163)
+    ["percent"]=>
+    int(62)
   }
   [1]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -155,6 +175,10 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(8)
+    ["score"]=>
+    float(4.0518638573744)
+    ["percent"]=>
+    int(38)
   }
 }
 ==DONE==

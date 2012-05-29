@@ -162,7 +162,7 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 	if (encoding_hint == -1) {
 		encoding_hint = UNKNOWN_ENCODING;
 	} else if (encoding_hint < 0 || encoding_hint > NUM_ENCODINGS) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid encoding \"%d\"", encoding_hint);
+		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid encoding \"%d\"", (int) encoding_hint);
 		return FAILURE;
 	}
 

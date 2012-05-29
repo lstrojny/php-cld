@@ -23,7 +23,7 @@ Warning: CLD\Detector::detectLanguage() expects at most 2 parameters, 3 given in
 NULL
 array(1) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(6) "GERMAN"
     ["code"]=>
@@ -32,11 +32,15 @@ array(1) {
     bool(true)
     ["bytes"]=>
     int(46)
+    ["score"]=>
+    float(56.151940545004)
+    ["percent"]=>
+    int(100)
   }
 }
 array(2) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -45,9 +49,13 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(39)
+    ["score"]=>
+    float(31.60453808752)
+    ["percent"]=>
+    int(61)
   }
   [1]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(9) "NORWEGIAN"
     ["code"]=>
@@ -56,11 +64,15 @@ array(2) {
     bool(true)
     ["bytes"]=>
     int(39)
+    ["score"]=>
+    float(9.6038415366146)
+    ["percent"]=>
+    int(39)
   }
 }
 array(1) {
   [0]=>
-  array(4) {
+  array(6) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -69,6 +81,10 @@ array(1) {
     bool(true)
     ["bytes"]=>
     int(13)
+    ["score"]=>
+    float(12.155591572123)
+    ["percent"]=>
+    int(100)
   }
 }
 ==DONE==
