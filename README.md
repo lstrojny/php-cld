@@ -28,11 +28,11 @@ var_export(CLD\detect("日[の]本([の]国", false, true, null, CLD\Language::J
 ```php
 <?php
 $detector = new CLD\Detector();
-var_export($detector->detect('Drüben hinterm Dorfe wohnt ein Leiermann. Und mit starren Fingern spielt er was er kann'));
+var_export($detector->detectLanguage('Drüben hinterm Dorfe wohnt ein Leiermann. Und mit starren Fingern spielt er was er kann'));
 
 $detector->setLanguageHint(CLD\Language::JAPANESE);
 $detector->setEncodingHint(CLD\Encoding::JAPANESE_EUC_JP);
-$detector->detect("日[の]本([の]国", false);
+$detector->detectLanguage("日[の]本([の]国", false);
 ```
 
 will return
