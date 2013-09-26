@@ -41,14 +41,6 @@
 # define PHP_CLD_API
 #endif
 
-#ifdef PHP_WIN32
-# define PHP_CLD_API __declspec(dllexport)
-#elif defined(__GNUC__) && __GNUC__ >= 4
-# define PHP_CLD_API __attribute__ ((visibility("default")))
-#else
-# define PHP_CLD_API
-#endif
-
 #ifdef __cplusplus
 extern "C" {
 #endif
