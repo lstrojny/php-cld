@@ -78,7 +78,7 @@ ZEND_BEGIN_MODULE_GLOBALS(cld)
 	int debug;
 ZEND_END_MODULE_GLOBALS(cld)
 
-PHPAPI ZEND_EXTERN_MODULE_GLOBALS(cld)
+PHP_CLD_API ZEND_EXTERN_MODULE_GLOBALS(cld)
 static void cld_init_globals(zend_cld_globals *cld_globals);
 
 #ifdef ZTS
