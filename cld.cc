@@ -104,7 +104,7 @@ static const zend_function_entry cld_functions[] = {
 	{NULL, NULL, NULL}
 };
 
-PHPAPI char *cld_strtoupper(char *s, size_t len)
+PHP_CLD_API char *cld_strtoupper(char *s, size_t len)
 {
 	unsigned char *c, *e;
 
@@ -118,7 +118,7 @@ PHPAPI char *cld_strtoupper(char *s, size_t len)
 	return s;
 }
 
-PHPAPI char *cld_strtolower(char *s, size_t len)
+PHP_CLD_API char *cld_strtolower(char *s, size_t len)
 {
 	unsigned char *c, *e;
 
@@ -132,7 +132,7 @@ PHPAPI char *cld_strtolower(char *s, size_t len)
 	return s;
 }
 
-PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_plain_text, int include_extended_languages, char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
+PHP_CLD_API int cld_detect_language(zval **result, char *text, int text_len, int is_plain_text, int include_extended_languages, char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
 {
 	int percentages[3],
 		bytes,
