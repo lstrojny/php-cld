@@ -41,9 +41,23 @@
 # define PHP_CLD_API
 #endif
 
+#ifdef PHP_WIN32
+# define PHP_CLD_API __declspec(dllexport)
+#elif defined(__GNUC__) && __GNUC__ >= 4
+# define PHP_CLD_API __attribute__ ((visibility("default")))
+#else
+# define PHP_CLD_API
+#endif
+
+#ifdef __cplusplus
 extern "C" {
+#endif
+
 #include "php.h"
-}
+
+#ifdef __cplusplus
+} /* extern C */
+#endif
 
 extern zend_module_entry cld_module_entry;
 #define phpext_cld_ptr &cld_module_entry

@@ -25,7 +25,21 @@
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Lars Strojny.
  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "php_cld.h"
+
+#include "ext/standard/info.h"
+#include "ext/standard/php_string.h"
+#include "Zend/zend_exceptions.h"
+#include "ext/spl/spl_exceptions.h"
+
+#ifdef __cplusplus
+} /* extern C */
+#endif
 
 #include <ctype.h>
 #define CLD_WINDOWS
@@ -34,11 +48,6 @@
 #include "encodings/compact_lang_det/ext_lang_enc.h"
 #include "base/string_util.h"
 #include "cld_encodings.h"
-
-#include "ext/standard/info.h"
-#include "ext/standard/php_string.h"
-#include "Zend/zend_exceptions.h"
-#include "spl/spl_exceptions.h"
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_cld_detect, 0, 0, 1)
 	ZEND_ARG_INFO(0, text)
