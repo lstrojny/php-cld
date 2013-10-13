@@ -15,7 +15,7 @@ before_script:
 
 script:
   - make test
-  - cat tests/*.diff || true
+  - sh test-report.sh
 
 notifications:
   email:
