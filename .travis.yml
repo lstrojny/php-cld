@@ -12,7 +12,9 @@ before_script:
   - sh -c "./configure --with-libcld-dir=vendor/libcld2"
   - sh -c "make"
 
-script: make test
+script:
+  - make test
+  - cat tests/*.diff || true
 
 notifications:
   email:
