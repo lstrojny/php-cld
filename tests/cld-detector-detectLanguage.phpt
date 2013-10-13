@@ -15,10 +15,10 @@ var_dump($detector->detectLanguage("Little bit"));
 ?>
 ==DONE==
 --EXPECTF--
-Warning: CLD\Detector::detectLanguage() expects at least 1 parameter, 0 given in /Users/lstrojny/Projects/github.com/lstrojny/php-cld/tests/cld-detector-detectLanguage.php on line 3
+Warning: CLD\Detector::detectLanguage() expects at least 1 parameter, 0 given in %s/cld-detector-detectLanguage.php on line 3
 NULL
 
-Warning: CLD\Detector::detectLanguage() expects at most 2 parameters, 3 given in /Users/lstrojny/Projects/github.com/lstrojny/php-cld/tests/cld-detector-detectLanguage.php on line 4
+Warning: CLD\Detector::detectLanguage() expects at most 2 parameters, 3 given in %s/cld-detector-detectLanguage.php on line 4
 NULL
 array(1) {
   [0]=>
