@@ -7,7 +7,7 @@ ini_set('cld.debug', true);
 class SimpleDetector extends CLD\Detector
 {}
 $d = new SimpleDetector();
-var_dump($d->detectLanguage('hello'));
+var_dump($d->detectLanguage('hello small world'));
 
 class PropertyOverridingDetector extends CLD\Detector
 {
@@ -17,7 +17,7 @@ class PropertyOverridingDetector extends CLD\Detector
 	protected $topLevelDomainHint = 'com';
 }
 $d = new PropertyOverridingDetector();
-var_dump($d->detectLanguage('hello'));
+var_dump($d->detectLanguage('hello small world'));
 
 class MethodOverridingDetector extends CLD\Detector
 {
@@ -55,19 +55,19 @@ var_dump($d->setEncodingHint(CLD\Encoding::UTF8UTF8));
 var_dump($d->getEncodingHint());
 var_dump($d->setTopLevelDomainHint('at'));
 var_dump($d->getTopLevelDomainHint());
-var_dump($d->detectLanguage('hallo'));
+var_dump($d->detectLanguage('hallo kleine welt'));
 ?>
 ==DONE==
 --EXPECT--
-TEXT: hello
+TEXT: hello small world
 PLAIN TEXT: 1
 EXTENDED LANGUAGES: 1
 TLD: (null)
 LANGUAGE: Unknown
 ENCODING: 23
-array(2) {
+array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -75,37 +75,20 @@ array(2) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(4.0518638573744)
+    int(19)
     ["percent"]=>
-    int(62)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(7) "ITALIAN"
-    ["code"]=>
-    string(2) "it"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(4.6189376443418)
-    ["percent"]=>
-    int(38)
+    int(94)
   }
 }
-TEXT: hello
+TEXT: hello small world
 PLAIN TEXT: 1
 EXTENDED LANGUAGES: 0
 TLD: com
 LANGUAGE: ENGLISH
 ENCODING: 63
-array(2) {
+array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -113,45 +96,28 @@ array(2) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(4.0518638573744)
+    int(19)
     ["percent"]=>
-    int(62)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(7) "ITALIAN"
-    ["code"]=>
-    string(2) "it"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(4.6189376443418)
-    ["percent"]=>
-    int(38)
+    int(94)
   }
 }
 NULL
-bool(false)
+bool(true)
 NULL
 string(2) "de"
 NULL
 int(63)
 NULL
 string(2) "at"
-TEXT: hallo
+TEXT: hallo kleine welt
 PLAIN TEXT: 0
-EXTENDED LANGUAGES: 0
+EXTENDED LANGUAGES: 1
 TLD: at
 LANGUAGE: GERMAN
 ENCODING: 63
-array(2) {
+array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(6) "GERMAN"
     ["code"]=>
@@ -159,26 +125,9 @@ array(2) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(12.386457473163)
+    int(19)
     ["percent"]=>
-    int(62)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(7) "ENGLISH"
-    ["code"]=>
-    string(2) "en"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(8)
-    ["score"]=>
-    float(4.0518638573744)
-    ["percent"]=>
-    int(38)
+    int(94)
   }
 }
 ==DONE==

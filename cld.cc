@@ -25,15 +25,16 @@
  * authors and should not be interpreted as representing official policies, either expressed
  * or implied, of Lars Strojny.
  */
+
 #include "php_cld.h"
 
 #include <ctype.h>
 #define CLD_WINDOWS
 
-#include "encodings/compact_lang_det/compact_lang_det.h"
-#include "encodings/compact_lang_det/ext_lang_enc.h"
-#include "base/string_util.h"
-#include "cld_encodings.h"
+#include "encodings.h"
+#include "public/compact_lang_det.h"
+#include "public/encodings.h"
+using namespace CLD2;
 
 #include "ext/standard/info.h"
 #include "ext/standard/php_string.h"
@@ -132,7 +133,7 @@ PHPAPI char *cld_strtolower(char *s, size_t len)
 	return s;
 }
 
-PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_plain_text, int include_extended_languages, char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
+PHPAPI int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, int include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
 {
 	int percentages[3],
 		bytes,
@@ -147,15 +148,16 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 	char *language_name;
 
-	double normalized_scores[3];
-
 	zval *detail;
 
 	if (language_hint_name_len == 0 || language_hint_name == NULL) {
 		language_hint = UNKNOWN_LANGUAGE;
-	} else if (!LanguageFromCode(language_hint_name, &language_hint)) {
-		php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", language_hint_name);
-		return FAILURE;
+	} else {
+		language_hint = GetLanguageFromName(language_hint_name);
+		if (language_hint == UNKNOWN_LANGUAGE) {
+			php_error_docref(NULL TSRMLS_CC, E_WARNING, "Invalid language code \"%s\"", language_hint_name);
+			return FAILURE;
+		}
 	}
 
 
@@ -177,9 +179,9 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 	}
 
 
-	CompactLangDet::DetectLanguage(0, text, text_len, is_plain_text,
-		include_extended_languages, 1, 0, top_level_domain_hint, encoding_hint,
-		language_hint, languages, percentages, normalized_scores, &bytes, &reliable);
+	DetectLanguageSummary(text, text_len, is_plain_text,
+		top_level_domain_hint, encoding_hint,
+		language_hint, languages, percentages, &bytes, &reliable);
 
 
 	array_init(*result);
@@ -192,15 +194,14 @@ PHPAPI int cld_detect_language(zval **result, char *text, int text_len, int is_p
 
 		MAKE_STD_ZVAL(detail);
 		array_init(detail);
-		language_name = (char *)ExtLanguageName(language);
+		language_name = (char *)LanguageName(language);
 		language_name_len = strlen(language_name);
 		language_name = estrndup(language_name, language_name_len);
 		cld_strtoupper(language_name, language_name_len);
 		add_assoc_string(detail, "name", language_name, 0);
-		add_assoc_string(detail, "code", (char *)ExtLanguageCode(language), 1);
+		add_assoc_string(detail, "code", (char *)LanguageCode(language), 1);
 		add_assoc_bool(detail, "reliable", reliable);
 		add_assoc_long(detail, "bytes", bytes);
-		add_assoc_double(detail, "score", normalized_scores[i]);
 		add_assoc_long(detail, "percent", percentages[i]);
 		add_next_index_zval(*result, detail);
 	}
@@ -242,11 +243,17 @@ PHP_MINIT_FUNCTION(cld)
 
 	for (a = 0; a < NUM_LANGUAGES; a++) {
 		size_t constant_name_len;
-		const char *code;
+		char *code;
 		char *constant_name;
 
-		code = LanguageCode((Language) a);
-		constant_name = (char*)LanguageName((Language) a);
+		code = (char *) LanguageCode((Language) a);
+		constant_name = (char *) LanguageName((Language) a);
+		if (strcmp(code, "") == 0) {
+			char tmp[6];
+			code = constant_name;
+			snprintf(tmp, sizeof tmp, "X_%s", constant_name);
+			constant_name = tmp;
+		}
 		constant_name_len = strlen(constant_name);
 		constant_name = estrndup(constant_name, constant_name_len);
 		cld_strtoupper(constant_name, constant_name_len);
@@ -414,7 +421,8 @@ PHP_METHOD(cld_detector, setLanguageHint)
 		hint = estrndup(hint, len);
 		cld_strtolower(hint, len);
 
-		if (!LanguageFromCode(hint, &lang)) {
+		lang = GetLanguageFromName(hint);
+		if (lang == UNKNOWN_LANGUAGE) {
 			zend_throw_exception_ex(cld_ce_InvalidLanguageException, 100 TSRMLS_CC, "Invalid language code \"%s\"", hint TSRMLS_CC);
 		} else {
 			zend_update_property_stringl(cld_ce_Detector, obj, "languageHint", sizeof("languageHint")-1, hint, len TSRMLS_CC);
