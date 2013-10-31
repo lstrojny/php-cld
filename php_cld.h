@@ -70,6 +70,11 @@ PHP_METHOD(cld_detector, setEncodingHint);
 PHP_METHOD(cld_detector, getEncodingHint);
 PHP_METHOD(cld_detector, detectLanguage);
 
+#ifdef PHP_WIN32
+# include <BaseTsd.h>
+# define _ALLOW_KEYWORD_MACROS
+#endif
+
 PHP_CLD_API char *cld_strtoupper(char *s, size_t len);
 PHP_CLD_API char *cld_strtolower(char *s, size_t len);
 PHP_CLD_API int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, int include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC);
