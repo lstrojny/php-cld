@@ -27,7 +27,7 @@ Class [ <internal:cld> final class CLD\Encoding ] {
     Constant [ integer CHINESE_GB ] { 14 }
     Constant [ integer CHINESE_EUC_CN ] { 15 }
     Constant [ integer KOREAN_EUC_KR ] { 16 }
-    Constant [ integer UNICODE ] { 17 }
+    Constant [ integer UNICODE_UNUSED ] { 17 }
     Constant [ integer CHINESE_EUC_DEC ] { 18 }
     Constant [ integer CHINESE_CNS ] { 19 }
     Constant [ integer CHINESE_BIG5_CP950 ] { 20 }
@@ -102,18 +102,18 @@ Class [ <internal:cld> final class CLD\Encoding ] {
 
 Class [ <internal:cld> final class CLD\Language ] {
 
-  - Constants [161] {
+  - Constants [614] {
     Constant [ string ENGLISH ] { en }
     Constant [ string DANISH ] { da }
     Constant [ string DUTCH ] { nl }
     Constant [ string FINNISH ] { fi }
     Constant [ string FRENCH ] { fr }
     Constant [ string GERMAN ] { de }
-    Constant [ string HEBREW ] { he }
+    Constant [ string HEBREW ] { iw }
     Constant [ string ITALIAN ] { it }
     Constant [ string JAPANESE ] { ja }
     Constant [ string KOREAN ] { ko }
-    Constant [ string NORWEGIAN ] { nb }
+    Constant [ string NORWEGIAN ] { no }
     Constant [ string POLISH ] { pl }
     Constant [ string PORTUGUESE ] { pt }
     Constant [ string RUSSIAN ] { ru }
@@ -128,14 +128,14 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string ROMANIAN ] { ro }
     Constant [ string HUNGARIAN ] { hu }
     Constant [ string ESTONIAN ] { et }
-    Constant [ string TG_UNKNOWN_LANGUAGE ] { ut }
+    Constant [ string IGNORE ] { xxx }
     Constant [ string UNKNOWN ] { un }
     Constant [ string BULGARIAN ] { bg }
     Constant [ string CROATIAN ] { hr }
     Constant [ string SERBIAN ] { sr }
     Constant [ string IRISH ] { ga }
     Constant [ string GALICIAN ] { gl }
-    Constant [ string TAGALOG ] { fil }
+    Constant [ string TAGALOG ] { tl }
     Constant [ string TURKISH ] { tr }
     Constant [ string UKRAINIAN ] { uk }
     Constant [ string HINDI ] { hi }
@@ -172,7 +172,7 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string VIETNAMESE ] { vi }
     Constant [ string FRISIAN ] { fy }
     Constant [ string SLOVAK ] { sk }
-    Constant [ string CHINESET ] { zh-TW }
+    Constant [ string CHINESET ] { zh-Hant }
     Constant [ string FAROESE ] { fo }
     Constant [ string SUNDANESE ] { su }
     Constant [ string UZBEK ] { uz }
@@ -184,8 +184,8 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string BOSNIAN ] { bs }
     Constant [ string SINHALESE ] { si }
     Constant [ string NORWEGIAN_N ] { nn }
-    Constant [ string PORTUGUESE_P ] { pt-PT }
-    Constant [ string PORTUGUESE_B ] { pt-BR }
+    Constant [ string X_81 ] { 81 }
+    Constant [ string X_82 ] { 82 }
     Constant [ string XHOSA ] { xh }
     Constant [ string ZULU ] { zu }
     Constant [ string GUARANI ] { gn }
@@ -195,7 +195,7 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string BRETON ] { br }
     Constant [ string TWI ] { tw }
     Constant [ string YIDDISH ] { yi }
-    Constant [ string SERBO_CROATIAN ] { sh }
+    Constant [ string X_92 ] { 92 }
     Constant [ string SOMALI ] { so }
     Constant [ string UIGHUR ] { ug }
     Constant [ string KURDISH ] { ku }
@@ -212,14 +212,14 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string DHIVEHI ] { dv }
     Constant [ string CHEROKEE ] { chr }
     Constant [ string SYRIAC ] { syr }
-    Constant [ string LIMBU ] { sit-NP }
+    Constant [ string LIMBU ] { lif }
     Constant [ string ORIYA ] { or }
     Constant [ string ASSAMESE ] { as }
     Constant [ string CORSICAN ] { co }
     Constant [ string INTERLINGUE ] { ie }
     Constant [ string KAZAKH ] { kk }
     Constant [ string LINGALA ] { ln }
-    Constant [ string MOLDAVIAN ] { mo }
+    Constant [ string X_116 ] { 116 }
     Constant [ string PASHTO ] { ps }
     Constant [ string QUECHUA ] { qu }
     Constant [ string SHONA ] { sn }
@@ -227,10 +227,10 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string TATAR ] { tt }
     Constant [ string TONGA ] { to }
     Constant [ string YORUBA ] { yo }
-    Constant [ string CREOLES_AND_PIDGINS_ENGLISH_BASED ] { cpe }
-    Constant [ string CREOLES_AND_PIDGINS_FRENCH_BASED ] { cpf }
-    Constant [ string CREOLES_AND_PIDGINS_PORTUGUESE_BASED ] { cpp }
-    Constant [ string CREOLES_AND_PIDGINS_OTHER ] { crp }
+    Constant [ string X_124 ] { 124 }
+    Constant [ string X_125 ] { 125 }
+    Constant [ string X_126 ] { 126 }
+    Constant [ string X_127 ] { 127 }
     Constant [ string MAORI ] { mi }
     Constant [ string WOLOF ] { wo }
     Constant [ string ABKHAZIAN ] { ab }
@@ -264,6 +264,459 @@ Class [ <internal:cld> final class CLD\Language ] {
     Constant [ string GANDA ] { lg }
     Constant [ string MANX ] { gv }
     Constant [ string MONTENEGRIN ] { sr-ME }
+    Constant [ string AKAN ] { ak }
+    Constant [ string IGBO ] { ig }
+    Constant [ string MAURITIAN_CREOLE ] { mfe }
+    Constant [ string HAWAIIAN ] { haw }
+    Constant [ string CEBUANO ] { ceb }
+    Constant [ string EWE ] { ee }
+    Constant [ string GA ] { gaa }
+    Constant [ string HMONG ] { hmn }
+    Constant [ string KRIO ] { kri }
+    Constant [ string LOZI ] { loz }
+    Constant [ string LUBA_LULUA ] { lua }
+    Constant [ string LUO_KENYA_AND_TANZANIA ] { luo }
+    Constant [ string NEWARI ] { new }
+    Constant [ string NYANJA ] { ny }
+    Constant [ string OSSETIAN ] { os }
+    Constant [ string PAMPANGA ] { pam }
+    Constant [ string PEDI ] { nso }
+    Constant [ string RAJASTHANI ] { raj }
+    Constant [ string SESELWA ] { crs }
+    Constant [ string TUMBUKA ] { tum }
+    Constant [ string VENDA ] { ve }
+    Constant [ string WARAY_PHILIPPINES ] { war }
+    Constant [ string X_183 ] { 183 }
+    Constant [ string X_184 ] { 184 }
+    Constant [ string X_185 ] { 185 }
+    Constant [ string X_186 ] { 186 }
+    Constant [ string X_187 ] { 187 }
+    Constant [ string X_188 ] { 188 }
+    Constant [ string X_189 ] { 189 }
+    Constant [ string X_190 ] { 190 }
+    Constant [ string X_191 ] { 191 }
+    Constant [ string X_192 ] { 192 }
+    Constant [ string X_193 ] { 193 }
+    Constant [ string X_194 ] { 194 }
+    Constant [ string X_195 ] { 195 }
+    Constant [ string X_196 ] { 196 }
+    Constant [ string X_197 ] { 197 }
+    Constant [ string X_198 ] { 198 }
+    Constant [ string X_199 ] { 199 }
+    Constant [ string X_200 ] { 200 }
+    Constant [ string X_201 ] { 201 }
+    Constant [ string X_202 ] { 202 }
+    Constant [ string X_203 ] { 203 }
+    Constant [ string X_204 ] { 204 }
+    Constant [ string X_205 ] { 205 }
+    Constant [ string X_206 ] { 206 }
+    Constant [ string X_207 ] { 207 }
+    Constant [ string X_208 ] { 208 }
+    Constant [ string X_209 ] { 209 }
+    Constant [ string X_210 ] { 210 }
+    Constant [ string X_211 ] { 211 }
+    Constant [ string X_212 ] { 212 }
+    Constant [ string X_213 ] { 213 }
+    Constant [ string X_214 ] { 214 }
+    Constant [ string X_215 ] { 215 }
+    Constant [ string X_216 ] { 216 }
+    Constant [ string X_217 ] { 217 }
+    Constant [ string X_218 ] { 218 }
+    Constant [ string X_219 ] { 219 }
+    Constant [ string X_220 ] { 220 }
+    Constant [ string X_221 ] { 221 }
+    Constant [ string X_222 ] { 222 }
+    Constant [ string X_223 ] { 223 }
+    Constant [ string X_224 ] { 224 }
+    Constant [ string X_225 ] { 225 }
+    Constant [ string X_226 ] { 226 }
+    Constant [ string X_227 ] { 227 }
+    Constant [ string X_228 ] { 228 }
+    Constant [ string X_229 ] { 229 }
+    Constant [ string X_230 ] { 230 }
+    Constant [ string X_231 ] { 231 }
+    Constant [ string X_232 ] { 232 }
+    Constant [ string X_233 ] { 233 }
+    Constant [ string X_234 ] { 234 }
+    Constant [ string X_235 ] { 235 }
+    Constant [ string X_236 ] { 236 }
+    Constant [ string X_237 ] { 237 }
+    Constant [ string X_238 ] { 238 }
+    Constant [ string X_239 ] { 239 }
+    Constant [ string X_240 ] { 240 }
+    Constant [ string X_241 ] { 241 }
+    Constant [ string X_242 ] { 242 }
+    Constant [ string X_243 ] { 243 }
+    Constant [ string X_244 ] { 244 }
+    Constant [ string X_245 ] { 245 }
+    Constant [ string X_246 ] { 246 }
+    Constant [ string X_247 ] { 247 }
+    Constant [ string X_248 ] { 248 }
+    Constant [ string X_249 ] { 249 }
+    Constant [ string X_250 ] { 250 }
+    Constant [ string X_251 ] { 251 }
+    Constant [ string X_252 ] { 252 }
+    Constant [ string X_253 ] { 253 }
+    Constant [ string X_254 ] { 254 }
+    Constant [ string X_255 ] { 255 }
+    Constant [ string X_256 ] { 256 }
+    Constant [ string X_257 ] { 257 }
+    Constant [ string X_258 ] { 258 }
+    Constant [ string X_259 ] { 259 }
+    Constant [ string X_260 ] { 260 }
+    Constant [ string X_261 ] { 261 }
+    Constant [ string X_262 ] { 262 }
+    Constant [ string X_263 ] { 263 }
+    Constant [ string X_264 ] { 264 }
+    Constant [ string X_265 ] { 265 }
+    Constant [ string X_266 ] { 266 }
+    Constant [ string X_267 ] { 267 }
+    Constant [ string X_268 ] { 268 }
+    Constant [ string X_269 ] { 269 }
+    Constant [ string X_270 ] { 270 }
+    Constant [ string X_271 ] { 271 }
+    Constant [ string X_272 ] { 272 }
+    Constant [ string X_273 ] { 273 }
+    Constant [ string X_274 ] { 274 }
+    Constant [ string X_275 ] { 275 }
+    Constant [ string X_276 ] { 276 }
+    Constant [ string X_277 ] { 277 }
+    Constant [ string X_278 ] { 278 }
+    Constant [ string X_279 ] { 279 }
+    Constant [ string X_280 ] { 280 }
+    Constant [ string X_281 ] { 281 }
+    Constant [ string X_282 ] { 282 }
+    Constant [ string X_283 ] { 283 }
+    Constant [ string X_284 ] { 284 }
+    Constant [ string X_285 ] { 285 }
+    Constant [ string X_286 ] { 286 }
+    Constant [ string X_287 ] { 287 }
+    Constant [ string X_288 ] { 288 }
+    Constant [ string X_289 ] { 289 }
+    Constant [ string X_290 ] { 290 }
+    Constant [ string X_291 ] { 291 }
+    Constant [ string X_292 ] { 292 }
+    Constant [ string X_293 ] { 293 }
+    Constant [ string X_294 ] { 294 }
+    Constant [ string X_295 ] { 295 }
+    Constant [ string X_296 ] { 296 }
+    Constant [ string X_297 ] { 297 }
+    Constant [ string X_298 ] { 298 }
+    Constant [ string X_299 ] { 299 }
+    Constant [ string X_300 ] { 300 }
+    Constant [ string X_301 ] { 301 }
+    Constant [ string X_302 ] { 302 }
+    Constant [ string X_303 ] { 303 }
+    Constant [ string X_304 ] { 304 }
+    Constant [ string X_305 ] { 305 }
+    Constant [ string X_306 ] { 306 }
+    Constant [ string X_307 ] { 307 }
+    Constant [ string X_308 ] { 308 }
+    Constant [ string X_309 ] { 309 }
+    Constant [ string X_310 ] { 310 }
+    Constant [ string X_311 ] { 311 }
+    Constant [ string X_312 ] { 312 }
+    Constant [ string X_313 ] { 313 }
+    Constant [ string X_314 ] { 314 }
+    Constant [ string X_315 ] { 315 }
+    Constant [ string X_316 ] { 316 }
+    Constant [ string X_317 ] { 317 }
+    Constant [ string X_318 ] { 318 }
+    Constant [ string X_319 ] { 319 }
+    Constant [ string X_320 ] { 320 }
+    Constant [ string X_321 ] { 321 }
+    Constant [ string X_322 ] { 322 }
+    Constant [ string X_323 ] { 323 }
+    Constant [ string X_324 ] { 324 }
+    Constant [ string X_325 ] { 325 }
+    Constant [ string X_326 ] { 326 }
+    Constant [ string X_327 ] { 327 }
+    Constant [ string X_328 ] { 328 }
+    Constant [ string X_329 ] { 329 }
+    Constant [ string X_330 ] { 330 }
+    Constant [ string X_331 ] { 331 }
+    Constant [ string X_332 ] { 332 }
+    Constant [ string X_333 ] { 333 }
+    Constant [ string X_334 ] { 334 }
+    Constant [ string X_335 ] { 335 }
+    Constant [ string X_336 ] { 336 }
+    Constant [ string X_337 ] { 337 }
+    Constant [ string X_338 ] { 338 }
+    Constant [ string X_339 ] { 339 }
+    Constant [ string X_340 ] { 340 }
+    Constant [ string X_341 ] { 341 }
+    Constant [ string X_342 ] { 342 }
+    Constant [ string X_343 ] { 343 }
+    Constant [ string X_344 ] { 344 }
+    Constant [ string X_345 ] { 345 }
+    Constant [ string X_346 ] { 346 }
+    Constant [ string X_347 ] { 347 }
+    Constant [ string X_348 ] { 348 }
+    Constant [ string X_349 ] { 349 }
+    Constant [ string X_350 ] { 350 }
+    Constant [ string X_351 ] { 351 }
+    Constant [ string X_352 ] { 352 }
+    Constant [ string X_353 ] { 353 }
+    Constant [ string X_354 ] { 354 }
+    Constant [ string X_355 ] { 355 }
+    Constant [ string X_356 ] { 356 }
+    Constant [ string X_357 ] { 357 }
+    Constant [ string X_358 ] { 358 }
+    Constant [ string X_359 ] { 359 }
+    Constant [ string X_360 ] { 360 }
+    Constant [ string X_361 ] { 361 }
+    Constant [ string X_362 ] { 362 }
+    Constant [ string X_363 ] { 363 }
+    Constant [ string X_364 ] { 364 }
+    Constant [ string X_365 ] { 365 }
+    Constant [ string X_366 ] { 366 }
+    Constant [ string X_367 ] { 367 }
+    Constant [ string X_368 ] { 368 }
+    Constant [ string X_369 ] { 369 }
+    Constant [ string X_370 ] { 370 }
+    Constant [ string X_371 ] { 371 }
+    Constant [ string X_372 ] { 372 }
+    Constant [ string X_373 ] { 373 }
+    Constant [ string X_374 ] { 374 }
+    Constant [ string X_375 ] { 375 }
+    Constant [ string X_376 ] { 376 }
+    Constant [ string X_377 ] { 377 }
+    Constant [ string X_378 ] { 378 }
+    Constant [ string X_379 ] { 379 }
+    Constant [ string X_380 ] { 380 }
+    Constant [ string X_381 ] { 381 }
+    Constant [ string X_382 ] { 382 }
+    Constant [ string X_383 ] { 383 }
+    Constant [ string X_384 ] { 384 }
+    Constant [ string X_385 ] { 385 }
+    Constant [ string X_386 ] { 386 }
+    Constant [ string X_387 ] { 387 }
+    Constant [ string X_388 ] { 388 }
+    Constant [ string X_389 ] { 389 }
+    Constant [ string X_390 ] { 390 }
+    Constant [ string X_391 ] { 391 }
+    Constant [ string X_392 ] { 392 }
+    Constant [ string X_393 ] { 393 }
+    Constant [ string X_394 ] { 394 }
+    Constant [ string X_395 ] { 395 }
+    Constant [ string X_396 ] { 396 }
+    Constant [ string X_397 ] { 397 }
+    Constant [ string X_398 ] { 398 }
+    Constant [ string X_399 ] { 399 }
+    Constant [ string X_400 ] { 400 }
+    Constant [ string X_401 ] { 401 }
+    Constant [ string X_402 ] { 402 }
+    Constant [ string X_403 ] { 403 }
+    Constant [ string X_404 ] { 404 }
+    Constant [ string X_405 ] { 405 }
+    Constant [ string X_406 ] { 406 }
+    Constant [ string X_407 ] { 407 }
+    Constant [ string X_408 ] { 408 }
+    Constant [ string X_409 ] { 409 }
+    Constant [ string X_410 ] { 410 }
+    Constant [ string X_411 ] { 411 }
+    Constant [ string X_412 ] { 412 }
+    Constant [ string X_413 ] { 413 }
+    Constant [ string X_414 ] { 414 }
+    Constant [ string X_415 ] { 415 }
+    Constant [ string X_416 ] { 416 }
+    Constant [ string X_417 ] { 417 }
+    Constant [ string X_418 ] { 418 }
+    Constant [ string X_419 ] { 419 }
+    Constant [ string X_420 ] { 420 }
+    Constant [ string X_421 ] { 421 }
+    Constant [ string X_422 ] { 422 }
+    Constant [ string X_423 ] { 423 }
+    Constant [ string X_424 ] { 424 }
+    Constant [ string X_425 ] { 425 }
+    Constant [ string X_426 ] { 426 }
+    Constant [ string X_427 ] { 427 }
+    Constant [ string X_428 ] { 428 }
+    Constant [ string X_429 ] { 429 }
+    Constant [ string X_430 ] { 430 }
+    Constant [ string X_431 ] { 431 }
+    Constant [ string X_432 ] { 432 }
+    Constant [ string X_433 ] { 433 }
+    Constant [ string X_434 ] { 434 }
+    Constant [ string X_435 ] { 435 }
+    Constant [ string X_436 ] { 436 }
+    Constant [ string X_437 ] { 437 }
+    Constant [ string X_438 ] { 438 }
+    Constant [ string X_439 ] { 439 }
+    Constant [ string X_440 ] { 440 }
+    Constant [ string X_441 ] { 441 }
+    Constant [ string X_442 ] { 442 }
+    Constant [ string X_443 ] { 443 }
+    Constant [ string X_444 ] { 444 }
+    Constant [ string X_445 ] { 445 }
+    Constant [ string X_446 ] { 446 }
+    Constant [ string X_447 ] { 447 }
+    Constant [ string X_448 ] { 448 }
+    Constant [ string X_449 ] { 449 }
+    Constant [ string X_450 ] { 450 }
+    Constant [ string X_451 ] { 451 }
+    Constant [ string X_452 ] { 452 }
+    Constant [ string X_453 ] { 453 }
+    Constant [ string X_454 ] { 454 }
+    Constant [ string X_455 ] { 455 }
+    Constant [ string X_456 ] { 456 }
+    Constant [ string X_457 ] { 457 }
+    Constant [ string X_458 ] { 458 }
+    Constant [ string X_459 ] { 459 }
+    Constant [ string X_460 ] { 460 }
+    Constant [ string X_461 ] { 461 }
+    Constant [ string X_462 ] { 462 }
+    Constant [ string X_463 ] { 463 }
+    Constant [ string X_464 ] { 464 }
+    Constant [ string X_465 ] { 465 }
+    Constant [ string X_466 ] { 466 }
+    Constant [ string X_467 ] { 467 }
+    Constant [ string X_468 ] { 468 }
+    Constant [ string X_469 ] { 469 }
+    Constant [ string X_470 ] { 470 }
+    Constant [ string X_471 ] { 471 }
+    Constant [ string X_472 ] { 472 }
+    Constant [ string X_473 ] { 473 }
+    Constant [ string X_474 ] { 474 }
+    Constant [ string X_475 ] { 475 }
+    Constant [ string X_476 ] { 476 }
+    Constant [ string X_477 ] { 477 }
+    Constant [ string X_478 ] { 478 }
+    Constant [ string X_479 ] { 479 }
+    Constant [ string X_480 ] { 480 }
+    Constant [ string X_481 ] { 481 }
+    Constant [ string X_482 ] { 482 }
+    Constant [ string X_483 ] { 483 }
+    Constant [ string X_484 ] { 484 }
+    Constant [ string X_485 ] { 485 }
+    Constant [ string X_486 ] { 486 }
+    Constant [ string X_487 ] { 487 }
+    Constant [ string X_488 ] { 488 }
+    Constant [ string X_489 ] { 489 }
+    Constant [ string X_490 ] { 490 }
+    Constant [ string X_491 ] { 491 }
+    Constant [ string X_492 ] { 492 }
+    Constant [ string X_493 ] { 493 }
+    Constant [ string X_494 ] { 494 }
+    Constant [ string X_495 ] { 495 }
+    Constant [ string X_496 ] { 496 }
+    Constant [ string X_497 ] { 497 }
+    Constant [ string X_498 ] { 498 }
+    Constant [ string X_499 ] { 499 }
+    Constant [ string X_500 ] { 500 }
+    Constant [ string X_501 ] { 501 }
+    Constant [ string X_502 ] { 502 }
+    Constant [ string X_503 ] { 503 }
+    Constant [ string X_504 ] { 504 }
+    Constant [ string X_505 ] { 505 }
+    Constant [ string NDEBELE ] { nr }
+    Constant [ string X_BORK_BORK_BORK ] { zzb }
+    Constant [ string X_PIG_LATIN ] { zzp }
+    Constant [ string X_HACKER ] { zzh }
+    Constant [ string X_KLINGON ] { tlh }
+    Constant [ string X_ELMER_FUDD ] { zze }
+    Constant [ string X_COMMON ] { xx-Zyyy }
+    Constant [ string X_LATIN ] { xx-Latn }
+    Constant [ string X_GREEK ] { xx-Grek }
+    Constant [ string X_CYRILLIC ] { xx-Cyrl }
+    Constant [ string X_ARMENIAN ] { xx-Armn }
+    Constant [ string X_HEBREW ] { xx-Hebr }
+    Constant [ string X_ARABIC ] { xx-Arab }
+    Constant [ string X_SYRIAC ] { xx-Syrc }
+    Constant [ string X_THAANA ] { xx-Thaa }
+    Constant [ string X_DEVANAGARI ] { xx-Deva }
+    Constant [ string X_BENGALI ] { xx-Beng }
+    Constant [ string X_GURMUKHI ] { xx-Guru }
+    Constant [ string X_GUJARATI ] { xx-Gujr }
+    Constant [ string X_ORIYA ] { xx-Orya }
+    Constant [ string X_TAMIL ] { xx-Taml }
+    Constant [ string X_TELUGU ] { xx-Telu }
+    Constant [ string X_KANNADA ] { xx-Knda }
+    Constant [ string X_MALAYALAM ] { xx-Mlym }
+    Constant [ string X_SINHALA ] { xx-Sinh }
+    Constant [ string X_THAI ] { xx-Thai }
+    Constant [ string X_LAO ] { xx-Laoo }
+    Constant [ string X_TIBETAN ] { xx-Tibt }
+    Constant [ string X_MYANMAR ] { xx-Mymr }
+    Constant [ string X_GEORGIAN ] { xx-Geor }
+    Constant [ string X_HANGUL ] { xx-Hang }
+    Constant [ string X_ETHIOPIC ] { xx-Ethi }
+    Constant [ string X_CHEROKEE ] { xx-Cher }
+    Constant [ string X_CANADIAN_ABORIGINAL ] { xx-Cans }
+    Constant [ string X_OGHAM ] { xx-Ogam }
+    Constant [ string X_RUNIC ] { xx-Runr }
+    Constant [ string X_KHMER ] { xx-Khmr }
+    Constant [ string X_MONGOLIAN ] { xx-Mong }
+    Constant [ string X_HIRAGANA ] { xx-Hira }
+    Constant [ string X_KATAKANA ] { xx-Kana }
+    Constant [ string X_BOPOMOFO ] { xx-Bopo }
+    Constant [ string X_HAN ] { xx-Hani }
+    Constant [ string X_YI ] { xx-Yiii }
+    Constant [ string X_OLD_ITALIC ] { xx-Ital }
+    Constant [ string X_GOTHIC ] { xx-Goth }
+    Constant [ string X_DESERET ] { xx-Dsrt }
+    Constant [ string X_INHERITED ] { xx-Qaai }
+    Constant [ string X_TAGALOG ] { xx-Tglg }
+    Constant [ string X_HANUNOO ] { xx-Hano }
+    Constant [ string X_BUHID ] { xx-Buhd }
+    Constant [ string X_TAGBANWA ] { xx-Tagb }
+    Constant [ string X_LIMBU ] { xx-Limb }
+    Constant [ string X_TAI_LE ] { xx-Tale }
+    Constant [ string X_LINEAR_B ] { xx-Linb }
+    Constant [ string X_UGARITIC ] { xx-Ugar }
+    Constant [ string X_SHAVIAN ] { xx-Shaw }
+    Constant [ string X_OSMANYA ] { xx-Osma }
+    Constant [ string X_CYPRIOT ] { xx-Cprt }
+    Constant [ string X_BRAILLE ] { xx-Brai }
+    Constant [ string X_BUGINESE ] { xx-Bugi }
+    Constant [ string X_COPTIC ] { xx-Copt }
+    Constant [ string X_NEW_TAI_LUE ] { xx-Talu }
+    Constant [ string X_GLAGOLITIC ] { xx-Glag }
+    Constant [ string X_TIFINAGH ] { xx-Tfng }
+    Constant [ string X_SYLOTI_NAGRI ] { xx-Sylo }
+    Constant [ string X_OLD_PERSIAN ] { xx-Xpeo }
+    Constant [ string X_KHAROSHTHI ] { xx-Khar }
+    Constant [ string X_BALINESE ] { xx-Bali }
+    Constant [ string X_CUNEIFORM ] { xx-Xsux }
+    Constant [ string X_PHOENICIAN ] { xx-Phnx }
+    Constant [ string X_PHAGS_PA ] { xx-Phag }
+    Constant [ string X_NKO ] { xx-Nkoo }
+    Constant [ string X_SUNDANESE ] { xx-Sund }
+    Constant [ string X_LEPCHA ] { xx-Lepc }
+    Constant [ string X_OL_CHIKI ] { xx-Olck }
+    Constant [ string X_VAI ] { xx-Vaii }
+    Constant [ string X_SAURASHTRA ] { xx-Saur }
+    Constant [ string X_KAYAH_LI ] { xx-Kali }
+    Constant [ string X_REJANG ] { xx-Rjng }
+    Constant [ string X_LYCIAN ] { xx-Lyci }
+    Constant [ string X_CARIAN ] { xx-Cari }
+    Constant [ string X_LYDIAN ] { xx-Lydi }
+    Constant [ string X_CHAM ] { xx-Cham }
+    Constant [ string X_TAI_THAM ] { xx-Lana }
+    Constant [ string X_TAI_VIET ] { xx-Tavt }
+    Constant [ string X_AVESTAN ] { xx-Avst }
+    Constant [ string X_EGYPTIAN_HIEROGLYPHS ] { xx-Egyp }
+    Constant [ string X_SAMARITAN ] { xx-Samr }
+    Constant [ string X_LISU ] { xx-Lisu }
+    Constant [ string X_BAMUM ] { xx-Bamu }
+    Constant [ string X_JAVANESE ] { xx-Java }
+    Constant [ string X_MEETEI_MAYEK ] { xx-Mtei }
+    Constant [ string X_IMPERIAL_ARAMAIC ] { xx-Armi }
+    Constant [ string X_OLD_SOUTH_ARABIAN ] { xx-Sarb }
+    Constant [ string X_INSCRIPTIONAL_PARTHIAN ] { xx-Prti }
+    Constant [ string X_INSCRIPTIONAL_PAHLAVI ] { xx-Phli }
+    Constant [ string X_OLD_TURKIC ] { xx-Orkh }
+    Constant [ string X_KAITHI ] { xx-Kthi }
+    Constant [ string X_BATAK ] { xx-Batk }
+    Constant [ string X_BRAHMI ] { xx-Brah }
+    Constant [ string X_MANDAIC ] { xx-Mand }
+    Constant [ string X_CHAKMA ] { xx-Cakm }
+    Constant [ string X_MEROITIC_CURSIVE ] { xx-Merc }
+    Constant [ string X_MEROITIC_HIEROGLYPHS ] { xx-Mero }
+    Constant [ string X_MIAO ] { xx-Plrd }
+    Constant [ string X_SHARADA ] { xx-Shrd }
+    Constant [ string X_SORA_SOMPENG ] { xx-Sora }
+    Constant [ string X_TAKRI ] { xx-Takr }
   }
 
   - Static properties [0] {

@@ -15,15 +15,14 @@ var_dump($detector->detectLanguage("Little bit"));
 ?>
 ==DONE==
 --EXPECTF--
-
-Warning: CLD\Detector::detectLanguage() expects at least 1 parameter, 0 given in %scld-detector-detectLanguage.php on line %d
+Warning: CLD\Detector::detectLanguage() expects at least 1 parameter, 0 given in %s/cld-detector-detectLanguage.php on line 3
 NULL
 
-Warning: CLD\Detector::detectLanguage() expects at most 2 parameters, 3 given in %scld-detector-detectLanguage.php on line %d
+Warning: CLD\Detector::detectLanguage() expects at most 2 parameters, 3 given in %s/cld-detector-detectLanguage.php on line 4
 NULL
 array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(6) "GERMAN"
     ["code"]=>
@@ -31,48 +30,14 @@ array(1) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(46)
-    ["score"]=>
-    float(56.151940545004)
+    int(45)
     ["percent"]=>
-    int(100)
-  }
-}
-array(2) {
-  [0]=>
-  array(6) {
-    ["name"]=>
-    string(7) "ENGLISH"
-    ["code"]=>
-    string(2) "en"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(39)
-    ["score"]=>
-    float(31.60453808752)
-    ["percent"]=>
-    int(61)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(9) "NORWEGIAN"
-    ["code"]=>
-    string(2) "nb"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(39)
-    ["score"]=>
-    float(9.6038415366146)
-    ["percent"]=>
-    int(39)
+    int(97)
   }
 }
 array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -80,11 +45,24 @@ array(1) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(13)
-    ["score"]=>
-    float(12.155591572123)
+    int(38)
     ["percent"]=>
-    int(100)
+    int(97)
+  }
+}
+array(1) {
+  [0]=>
+  array(5) {
+    ["name"]=>
+    string(7) "ENGLISH"
+    ["code"]=>
+    string(2) "en"
+    ["reliable"]=>
+    bool(true)
+    ["bytes"]=>
+    int(12)
+    ["percent"]=>
+    int(91)
   }
 }
 ==DONE==

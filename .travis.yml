@@ -2,17 +2,20 @@ language: php
 php:
   - 5.3
   - 5.4
+  - 5.5
 
 env:
   - NO_INTERACTION=1
 
 before_script:
-  - sh -c "cd vendor/libcld && ./build.sh"
+  - sh -c "cd vendor/libcld2/internal && sh compile_libs.sh"
   - sh -c "phpize"
-  - sh -c "./configure --with-libcld-dir=vendor/libcld"
+  - sh -c "./configure --with-libcld-dir=vendor/libcld2"
   - sh -c "make"
 
-script: make test
+script:
+  - make test
+  - sh test-report.sh
 
 notifications:
   email:

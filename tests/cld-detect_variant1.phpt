@@ -11,7 +11,7 @@ var_dump(CLD\detect("<a>Hello world, how are you today</a>", false, true));
 --EXPECT--
 array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(6) "GERMAN"
     ["code"]=>
@@ -19,16 +19,14 @@ array(1) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(46)
-    ["score"]=>
-    float(56.151940545004)
+    int(45)
     ["percent"]=>
-    int(100)
+    int(97)
   }
 }
-array(2) {
+array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -36,31 +34,14 @@ array(2) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(39)
-    ["score"]=>
-    float(31.60453808752)
+    int(38)
     ["percent"]=>
-    int(61)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(9) "NORWEGIAN"
-    ["code"]=>
-    string(2) "nb"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(39)
-    ["score"]=>
-    float(27.611044417767)
-    ["percent"]=>
-    int(39)
+    int(97)
   }
 }
-array(2) {
+array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(8) "JAPANESE"
     ["code"]=>
@@ -68,31 +49,14 @@ array(2) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(22)
-    ["score"]=>
-    float(49)
+    int(21)
     ["percent"]=>
-    int(63)
-  }
-  [1]=>
-  array(6) {
-    ["name"]=>
-    string(7) "CHINESE"
-    ["code"]=>
-    string(2) "zh"
-    ["reliable"]=>
-    bool(true)
-    ["bytes"]=>
-    int(22)
-    ["score"]=>
-    float(17)
-    ["percent"]=>
-    int(37)
+    int(95)
   }
 }
 array(1) {
   [0]=>
-  array(6) {
+  array(5) {
     ["name"]=>
     string(7) "ENGLISH"
     ["code"]=>
@@ -100,11 +64,9 @@ array(1) {
     ["reliable"]=>
     bool(true)
     ["bytes"]=>
-    int(32)
-    ["score"]=>
-    float(49.432739059968)
+    int(31)
     ["percent"]=>
-    int(100)
+    int(96)
   }
 }
 ==DONE==
