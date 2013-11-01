@@ -71,7 +71,9 @@ PHP_METHOD(cld_detector, getEncodingHint);
 PHP_METHOD(cld_detector, detectLanguage);
 
 #ifdef PHP_WIN32
-# include <BaseTsd.h>
+# ifndef __BOOL_DEFINED
+typedef int bool
+# endif
 # define _ALLOW_KEYWORD_MACROS
 #endif
 

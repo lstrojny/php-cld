@@ -1,11 +1,12 @@
 ARG_WITH("cld", "Chromium Compact Language Detector", "no");
 
 if (PHP_CLD != "no") {
-	if (CHECK_LIB("libcld_a.lib", "cld", PHP_CLD)&& CHECK_HEADER_ADD_INCLUDE("public/encodings.h", "CFLAGS_CLD", PHP_CLD +  ";" + PHP_PHP_BUILD + "\\include\\cld")) {
+	if (CHECK_LIB("libcld2_a.lib", "cld", PHP_CLD)&& CHECK_HEADER_ADD_INCLUDE("public/encodings.h", "CFLAGS_CLD", PHP_CLD +  ";" + PHP_PHP_BUILD + "\\include\\cld")) {
 		EXTENSION("cld", " cld.cc", PHP_CLD_SHARED);
 		AC_DEFINE('HAVE_LIBCLD', 1, 'Have LibCLD library');
 		AC_DEFINE('HAVE_CLD', 1, 'Have CLD support');
 		ADD_FLAG("CFLAGS_CLD", ' /D ZEND_WIN32_FORCE_INLINE ');
+		ADD_FLAG("CFLAGS_CLD", ' /EHsc ');
 	} else {
 		WARNING("cld not enabled; libraries and headers not found");
 		PHP_CLD = "no";
