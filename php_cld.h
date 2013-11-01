@@ -33,9 +33,23 @@
 #include "config.h"
 #endif
 
+#ifdef PHP_WIN32
+# define PHP_CLD_API __declspec(dllexport)
+#elif defined(__GNUC__) && __GNUC__ >= 4
+# define PHP_CLD_API __attribute__ ((visibility("default")))
+#else
+# define PHP_CLD_API
+#endif
+
+#ifdef __cplusplus
 extern "C" {
+#endif
+
 #include "php.h"
-}
+
+#ifdef __cplusplus
+} /* extern C */
+#endif
 
 extern zend_module_entry cld_module_entry;
 #define phpext_cld_ptr &cld_module_entry
@@ -56,15 +70,22 @@ PHP_METHOD(cld_detector, setEncodingHint);
 PHP_METHOD(cld_detector, getEncodingHint);
 PHP_METHOD(cld_detector, detectLanguage);
 
-PHPAPI char *cld_strtoupper(char *s, size_t len);
-PHPAPI char *cld_strtolower(char *s, size_t len);
-PHPAPI int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, int include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC);
+#ifdef PHP_WIN32
+# ifndef __BOOL_DEFINED
+typedef int bool
+# endif
+# define _ALLOW_KEYWORD_MACROS
+#endif
+
+PHP_CLD_API char *cld_strtoupper(char *s, size_t len);
+PHP_CLD_API char *cld_strtolower(char *s, size_t len);
+PHP_CLD_API int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, int include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC);
 
 ZEND_BEGIN_MODULE_GLOBALS(cld)
 	int debug;
 ZEND_END_MODULE_GLOBALS(cld)
 
-PHPAPI ZEND_EXTERN_MODULE_GLOBALS(cld)
+PHP_CLD_API ZEND_EXTERN_MODULE_GLOBALS(cld)
 static void cld_init_globals(zend_cld_globals *cld_globals);
 
 #ifdef ZTS
