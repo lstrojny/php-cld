@@ -4,6 +4,7 @@ Test subclasses CLD\Detector
 <?php
 ini_set('cld.debug', true);
 
+echo "Override\n";
 class SimpleDetector extends CLD\Detector
 {}
 $d = new SimpleDetector();
@@ -16,29 +17,31 @@ class PropertyOverridingDetector extends CLD\Detector
 	protected $encodingHint = CLD\Encoding::UTF8UTF8;
 	protected $topLevelDomainHint = 'com';
 }
+echo "Property Override\n";
 $d = new PropertyOverridingDetector();
+var_dump($d->getIncludeExtendedLanguages());
 var_dump($d->detectLanguage('hello small world'));
 
 class MethodOverridingDetector extends CLD\Detector
 {
 	public function setIncludeExtendedLanguages($flag)
 	{
-		parent::setIncludeExtendedLanguages($flag);
+		return parent::setIncludeExtendedLanguages($flag);
 	}
 
 	public function setLanguageHint($lang)
 	{
-		parent::setLanguageHint($lang);
+		return parent::setLanguageHint($lang);
 	}
 
 	public function setEncodingHint($encoding)
 	{
-		parent::setEncodingHint($encoding);
+		return parent::setEncodingHint($encoding);
 	}
 
 	public function setTopLevelDomainHint($tld)
 	{
-		parent::setTopLevelDomainHint($tld);
+		return parent::setTopLevelDomainHint($tld);
 	}
 
 	public function detectLanguage($text, $isPlainText = false)
@@ -46,7 +49,9 @@ class MethodOverridingDetector extends CLD\Detector
 		return parent::detectLanguage($text, $isPlainText);
 	}
 }
+echo "Method Override\n";
 $d = new MethodOverridingDetector();
+var_dump($d->getIncludeExtendedLanguages());
 var_dump($d->setIncludeExtendedLanguages(false));
 var_dump($d->getIncludeExtendedLanguages());
 var_dump($d->setLanguageHint(CLD\Language::GERMAN));
@@ -59,6 +64,7 @@ var_dump($d->detectLanguage('hallo kleine welt'));
 ?>
 ==DONE==
 --EXPECT--
+Override
 TEXT: hello small world
 PLAIN TEXT: 1
 EXTENDED LANGUAGES: 1
@@ -80,6 +86,8 @@ array(1) {
     int(94)
   }
 }
+Property Override
+bool(false)
 TEXT: hello small world
 PLAIN TEXT: 1
 EXTENDED LANGUAGES: 0
@@ -101,8 +109,10 @@ array(1) {
     int(94)
   }
 }
-NULL
+Method Override
 bool(true)
+NULL
+bool(false)
 NULL
 string(2) "de"
 NULL
@@ -111,7 +121,7 @@ NULL
 string(2) "at"
 TEXT: hallo kleine welt
 PLAIN TEXT: 0
-EXTENDED LANGUAGES: 1
+EXTENDED LANGUAGES: 0
 TLD: at
 LANGUAGE: GERMAN
 ENCODING: 63

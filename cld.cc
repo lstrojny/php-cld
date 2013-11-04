@@ -141,7 +141,7 @@ PHP_CLD_API char *cld_strtolower(char *s, size_t len)
 	return s;
 }
 
-PHP_CLD_API int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, int include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
+PHP_CLD_API int cld_detect_language(zval **result, const char *text, int text_len, bool is_plain_text, zend_bool include_extended_languages, const char *top_level_domain_hint, int top_level_domain_hint_len, char *language_hint_name, int language_hint_name_len, long encoding_hint TSRMLS_DC)
 {
 	int percentages[3],
 		bytes,
@@ -330,13 +330,11 @@ ZEND_GET_MODULE(cld)
 PHP_FUNCTION(cld_detect)
 {
 	int is_plain_text = 1,
-		include_extended_languages = 1,
 		top_level_domain_hint_len = 0,
 		language_hint_name_len = 0,
 		text_len;
-
+	zend_bool include_extended_languages = 1;
 	long encoding_hint = -1;
-
 	char *text,
 		*top_level_domain_hint = NULL,
 		*language_hint_name = NULL;
@@ -359,8 +357,7 @@ PHP_FUNCTION(cld_detect)
 PHP_METHOD(cld_detector, setIncludeExtendedLanguages)
 {
 	zval *obj;
-
-	int include;
+	zend_bool include;
 
 	if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Ob", &obj, cld_ce_Detector, &include) == FAILURE) {
 		RETURN_NULL();
@@ -378,7 +375,7 @@ PHP_METHOD(cld_detector, getIncludeExtendedLanguages)
 		RETURN_NULL();
 	}
 
-	include = zend_read_property(cld_ce_Detector, obj, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, 0 TSRMLS_CC);
+	include = zend_read_property(cld_ce_Detector, obj, "includeExtendedLanguages", sizeof("includeExtendedLanguages")-1, 1 TSRMLS_CC);
 	RETVAL_ZVAL(include, 1, 0);
 }
 
